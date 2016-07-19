@@ -1,6 +1,7 @@
 package models.figures;
 
-import javafx.util.Pair;
+import models.Color;
+import models.Coordinate;
 import models.Table;
 
 import java.util.List;
@@ -8,9 +9,30 @@ import java.util.List;
 /**
  * Created by ilnar on 18.07.16.
  */
-public interface Figure {
+public abstract class Figure {
 
-    static List<Pair<Integer, Integer>> getPossibleMoves(Table table, int x, int y) {
-        return null;
+    protected final Color color;
+
+    protected final Table table;
+
+    protected Coordinate coor;
+
+    public Figure(Table table, Color color) {
+        this.table = table;
+        this.color = color;
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Coordinate getCoor() {
+        return coor;
+    }
+
+    public void setCoor(Coordinate coor) {
+        this.coor = coor;
+    }
+
+    abstract public List<Coordinate> getPossibleMoves();
 }

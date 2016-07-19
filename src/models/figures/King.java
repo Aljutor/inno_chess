@@ -1,6 +1,7 @@
 package models.figures;
 
 import javafx.util.Pair;
+import models.Color;
 import models.Table;
 
 import java.util.ArrayList;
@@ -9,7 +10,12 @@ import java.util.List;
 /**
  * Created by ilnar on 18.07.16.
  */
-public class King implements Figure {
+public class King extends Figure {
+
+    public King(Table table, Color color) {
+        super(table, color);
+    }
+
     public static List<Pair<Integer, Integer>> getPossibleMoves(Table table, int r, int c) {
         List<Pair<Integer, Integer>> result = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {
