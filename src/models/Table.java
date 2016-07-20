@@ -1,5 +1,6 @@
 package models;
 
+import javafx.scene.control.Tab;
 import models.figures.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class Table {
     public static final int DEFAULT_SIZE = 8;
+
     private final Figure[][] table;
 
     private Color whoseTurn;
@@ -35,6 +37,13 @@ public class Table {
         }
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
+    }
+
+    public Table(Figure[][] table, Player firstPlayer, Player secondPlayer, Color whoseTurn){
+        this.table = table;
+        this.firstPlayer = firstPlayer;
+        this.secondPlayer = secondPlayer;
+        this.whoseTurn = whoseTurn;
     }
 
     public Figure[][] getTable() {
@@ -74,6 +83,20 @@ public class Table {
             }
         }
         return false;
+    }
+
+    public Table doMove(Coordinate coor_from, Coordinate coor_to){
+
+        Figure[][] table = this.table.clone() ;
+        Figure figure = getFigure(coor_from);
+
+        figure.setCoor(coor_to);
+
+        table[coor_from.getR()][coor_from.getC()] = null;
+        table[coor_to.getR()][coor_to.getC()]     = figure;
+
+        return new Table(table, this.firstPlayer, this.secondPlayer, this.whoseTurn);
+
     }
 
     public List<Figure> getColoredFigures(Color color) {

@@ -40,6 +40,10 @@ public abstract class Figure {
         this.c = coor.getC();
     }
 
+    public FigureType getType(){
+        return type;
+    }
+
     protected List<Coordinate> applyArray(int[] dr, int[] dc) {
         List<Coordinate> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
@@ -56,6 +60,3 @@ public abstract class Figure {
     abstract public List<Coordinate> getPossibleMoves();
 }
 
-enum FigureType {
-    PAWN, BISHOP, KNIGHT, ROOK, QUEEN, KING
-}
