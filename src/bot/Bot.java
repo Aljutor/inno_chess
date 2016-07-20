@@ -9,8 +9,11 @@ import java.util.Random;
 /**
  * Created by Semyon Bessonov on 20.07.2016.
  */
-public class Bot{
-    protected Color color;
+public class Bot extends Player {
+
+    public Bot(String name, Color color) {
+        super(name, color);
+    }
 
     public Move nextMove(Table table){
 
@@ -32,11 +35,10 @@ public class Bot{
 
         for (Figure f: figureList){
             Coordinate position = f.getCoor();
-
             List<Coordinate> coordinates = f.getPossibleMoves();
 
             for (Coordinate c: coordinates){
-                Table new_table = table.doMove(position, c);
+                Table new_table = table.doMove(new Move(position, c), color);
                 int rank = evaluation.estimate(new_table);
 
                 if (rank > maxRank){
@@ -46,5 +48,10 @@ public class Bot{
             }
         }
         return new Move(startMove, nextMove);
+    }
+
+    @Override
+    public void messageReceiver(String s) {
+
     }
 }

@@ -30,4 +30,13 @@ public class Coordinate {
     public int getC() {
         return c;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Coordinate) {
+            Coordinate co = (Coordinate) o;
+            return co.c == c && co.r == r;
+        }
+        return false;
+    }
 }

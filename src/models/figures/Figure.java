@@ -48,7 +48,7 @@ public abstract class Figure {
     protected List<Coordinate> applyArray(int[] dr, int[] dc) {
         List<Coordinate> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
-            for (int newR = r + dr[i], newC = c + dc[i]; table.checkMove(newR, newC); newR += dr[i], newC += dc[i]) {
+            for (int newR = r + dr[i], newC = c + dc[i]; table.checkMove(newR, newC, color); newR += dr[i], newC += dc[i]) {
                 result.add(new Coordinate(newR, newC));
                 if (table.getFigure(newR, newC) != null) {
                     break;
