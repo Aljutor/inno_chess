@@ -85,7 +85,10 @@ public class Table {
         return false;
     }
 
-    public Table doMove(Coordinate coor_from, Coordinate coor_to){
+    public Table doMove(Move move){
+
+        Coordinate coor_from = move.from;
+        Coordinate coor_to = move.to;
 
         Figure[][] table = this.table.clone() ;
         Figure figure = getFigure(coor_from);
