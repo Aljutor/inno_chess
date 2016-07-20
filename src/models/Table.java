@@ -107,30 +107,29 @@ public class Table {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
                 Figure figure = this.table[i][j];
                 if (figure != null) {
-                    Figure new_figure = new Pawn(tableObj, figure.getColor());
+                    Figure newFigure = new Pawn(tableObj, figure.getColor());
                     switch (figure.getType()){
                         case KING:
-                            new_figure = new King(tableObj, figure.getColor());
+                            newFigure = new King(tableObj, figure.getColor());
                             break;
                         case QUEEN:
-                            new_figure = new Queen(tableObj, figure.getColor());
+                            newFigure = new Queen(tableObj, figure.getColor());
                             break;
                         case ROOK:
-                            new_figure = new Rook(tableObj, figure.getColor());
+                            newFigure = new Rook(tableObj, figure.getColor());
                             break;
                         case BISHOP:
-                            new_figure = new Bishop(tableObj, figure.getColor());
+                            newFigure = new Bishop(tableObj, figure.getColor());
                             break;
                         case KNIGHT:
-                            new_figure = new Knight(tableObj, figure.getColor());
+                            newFigure = new Knight(tableObj, figure.getColor());
                             break;
                         case PAWN:
-                            new_figure = new Pawn(tableObj, figure.getColor());
+                            newFigure = new Pawn(tableObj, figure.getColor());
                             break;
                         }
-                    new_figure.setCoor(new Coordinate(i,j));
-                    tableObj.table[i][j] = new_figure;
-
+                    newFigure.setCoor(new Coordinate(i,j));
+                    tableObj.table[i][j] = newFigure;
                     }
                 }
             }
@@ -138,15 +137,15 @@ public class Table {
     }
 
     public Table doMove(Move move){
-        Coordinate coor_from = move.from;
-        Coordinate coor_to   = move.to;
+        Coordinate coorFrom = move.from;
+        Coordinate coorTo   = move.to;
 
-        Table new_table = this.clone();
+        Table newTable = this.clone();
 
-        new_table.table[coor_to.getR()][coor_to.getC()]     =  new_table.getFigure(coor_from).setCoor(coor_to);
-        new_table.table[coor_from.getR()][coor_from.getC()] = null;
+        newTable.table[coorTo.getR()][coorTo.getC()]     =  newTable.getFigure(coorFrom).setCoor(coorTo);
+        newTable.table[coorFrom.getR()][coorFrom.getC()] = null;
 
-        return new_table;
+        return newTable;
 
     }
 
