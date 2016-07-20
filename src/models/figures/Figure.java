@@ -2,6 +2,7 @@ package models.figures;
 
 import models.Color;
 import models.Coordinate;
+import models.Move;
 import models.Table;
 
 import java.util.ArrayList;
@@ -17,9 +18,7 @@ public abstract class Figure {
 
     protected final Table table;
 
-    protected int r;
-
-    protected int c;
+    protected Coordinate coor;
 
     public Figure(Table table, Color color, FigureType type) {
         this.table = table;
@@ -32,12 +31,19 @@ public abstract class Figure {
     }
 
     public Coordinate getCoor() {
-        return new Coordinate(r, c);
+        return coor;
+    }
+
+    protected int r() {
+        return coor.getR();
+    }
+
+    protected int c() {
+        return coor.getC();
     }
 
     public Figure setCoor(Coordinate coor) {
-        this.r = coor.getR();
-        this.c = coor.getC();
+        this.coor = coor;
         return this;
     }
 
@@ -45,11 +51,11 @@ public abstract class Figure {
         return type;
     }
 
-    protected List<Coordinate> applyArray(int[] dr, int[] dc) {
-        List<Coordinate> result = new ArrayList<>();
+    protected List<Move> applyArray(int[] dr, int[] dc) {
+        List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
-            for (int newR = r + dr[i], newC = c + dc[i]; table.checkMove(newR, newC, color); newR += dr[i], newC += dc[i]) {
-                result.add(new Coordinate(newR, newC));
+            for (int newR = r() + dr[i], newC = c() + dc[i]; table.checkMove(newR, newC, color); newR += dr[i], newC += dc[i]) {
+                result.add(new Move(coor, new Coordinate(newR, newC)));
                 if (table.getFigure(newR, newC) != null) {
                     break;
                 }
@@ -58,6 +64,6 @@ public abstract class Figure {
         return result;
     }
 
-    abstract public List<Coordinate> getPossibleMoves();
+    abstract public List<Move> getPossibleMoves();
 }
 

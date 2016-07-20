@@ -63,14 +63,14 @@ public class Evaluation {
         black_rank += value_rank(figureList);
 
 
-        switch (table.whoseTurn()){
-            case WHITE:
-                rank = (white_rank - black_rank);
-                break;
-            case BLACK:
-                rank = (black_rank - white_rank);
-                break;
-        }
+//        switch (table.whoseTurn()){
+//            case WHITE:
+//                rank = (white_rank - black_rank);
+//                break;
+//            case BLACK:
+//                rank = (black_rank - white_rank);
+//                break;
+//        }
 
         return rank;
     }

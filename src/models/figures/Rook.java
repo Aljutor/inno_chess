@@ -1,7 +1,7 @@
 package models.figures;
 
 import models.Color;
-import models.Coordinate;
+import models.Move;
 import models.Table;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class Rook extends Figure {
         super(table, color, FigureType.ROOK);
     }
 
-    public List<Coordinate> getPossibleMoves() {
+    public List<Move> getPossibleMoves() {
         return applyArray(dr, dc);
     }
 }

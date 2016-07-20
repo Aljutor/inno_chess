@@ -2,6 +2,7 @@ package models.figures;
 
 import models.Color;
 import models.Coordinate;
+import models.Move;
 import models.Table;
 
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ public class Knight extends Figure {
         super(table, color, FigureType.KNIGHT);
     }
 
-    public List<Coordinate> getPossibleMoves() {
-        List<Coordinate> result = new ArrayList<>();
+    public List<Move> getPossibleMoves() {
+        List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
-            int newR = r + dr[i];
-            int newC = c + dc[i];
-            if (table.checkMove(newR, newC)) {
-                result.add(new Coordinate(newR, newC));
+            int newR = r() + dr[i];
+            int newC = c() + dc[i];
+            if (table.checkMove(newR, newC, color)) {
+                result.add(new Move(coor, new Coordinate(newR, newC)));
             }
         }
         return result;

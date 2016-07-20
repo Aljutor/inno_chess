@@ -4,23 +4,13 @@ package models;
  * Created by ilnar on 19.07.16.
  */
 public class Coordinate {
-    private int r;
+    private final int r;
 
-    private int c;
+    private final int c;
 
     public Coordinate(int r, int c) {
         this.r = r;
         this.c = c;
-    }
-
-    public void set(int r, int c) {
-        this.r = r;
-        this.c = c;
-    }
-
-    public void add(int dr, int dc) {
-        r += dr;
-        c += dc;
     }
 
     public int getR() {
@@ -38,5 +28,10 @@ public class Coordinate {
             return co.c == c && co.r == r;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%d;%d]", r, c);
     }
 }
