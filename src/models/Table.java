@@ -32,11 +32,14 @@ public class Table {
         table[7] = new Figure[]{new Rook(this, Color.BLACK), new Knight(this, Color.BLACK), new Bishop(this, Color.BLACK), new King(this, Color.BLACK), new Queen(this, Color.BLACK), new Bishop(this, Color.BLACK), new Knight(this, Color.BLACK), new Rook(this, Color.BLACK)};
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
-                table[i][j].setCoor(new Coordinate(i, j));
+                if (table[i][j] != null){
+                    table[i][j].setCoor(new Coordinate(i, j));
+                }
             }
         }
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
+        this.whoseTurn = Color.WHITE;
     }
 
     public Table(Figure[][] table, Player firstPlayer, Player secondPlayer, Color whoseTurn){
@@ -85,20 +88,57 @@ public class Table {
         return false;
     }
 
+
+    public Table clone(){
+        Figure[][] table = new Figure[DEFAULT_SIZE][DEFAULT_SIZE];
+        Table tableObj = new Table(table, this.firstPlayer, this.secondPlayer, this.whoseTurn);
+
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_SIZE; j++) {
+                Figure figure = this.table[i][j];
+                if (figure != null) {
+                    Figure new_figure = new Pawn(tableObj, figure.getColor());
+                    switch (figure.getType()){
+                        case KING:
+                            new_figure = new King(tableObj, figure.getColor());
+                            break;
+                        case QUEEN:
+                            new_figure = new Queen(tableObj, figure.getColor());
+                            break;
+                        case ROOK:
+                            new_figure = new Rook(tableObj, figure.getColor());
+                            break;
+                        case BISHOP:
+                            new_figure = new Bishop(tableObj, figure.getColor());
+                            break;
+                        case KNIGHT:
+                            new_figure = new Knight(tableObj, figure.getColor());
+                            break;
+                        case PAWN:
+                            new_figure = new Pawn(tableObj, figure.getColor());
+                            break;
+                        }
+                        tableObj.table[i][j] = new_figure;
+                    }
+                }
+            }
+        return tableObj;
+    }
+
     public Table doMove(Move move){
-
         Coordinate coor_from = move.from;
-        Coordinate coor_to = move.to;
+        Coordinate coor_to   = move.to;
 
-        Figure[][] table = this.table.clone() ;
-        Figure figure = getFigure(coor_from);
+        Table new_table = this.clone();
 
+        Figure figure = new_table.getFigure(coor_from);
         figure.setCoor(coor_to);
 
-        table[coor_from.getR()][coor_from.getC()] = null;
-        table[coor_to.getR()][coor_to.getC()]     = figure;
 
-        return new Table(table, this.firstPlayer, this.secondPlayer, this.whoseTurn);
+        new_table.table[coor_from.getR()][coor_from.getC()] = null;
+        new_table.table[coor_to.getR()][coor_to.getC()]     = figure;
+
+        return new_table;
 
     }
 
@@ -106,7 +146,7 @@ public class Table {
         List<Figure> result = new ArrayList<>();
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
-                if (table[i][j].getColor() == color) {
+                if (table[i][j] != null && table[i][j].getColor() == color) {
                     result.add(table[i][j]);
                 }
             }

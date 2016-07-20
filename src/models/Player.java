@@ -15,5 +15,5 @@ public abstract class Player {
         return color;
     }
 
-    abstract void turn();
+    public abstract void turn();
 }
