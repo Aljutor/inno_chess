@@ -2,6 +2,9 @@ package models;
 
 import models.figures.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ilnar on 18.07.16.
  */
@@ -39,7 +42,11 @@ public class Table {
     }
 
     public Figure getFigure(Coordinate coor) {
-        return table[coor.getR()][coor.getC()];
+        return getFigure(coor.getR(), coor.getC());
+    }
+
+    public Figure getFigure(int r, int c) {
+        return table[r][c];
     }
 
     public Color whoseTurn() {
@@ -57,11 +64,27 @@ public class Table {
     }
 
     public boolean checkMove(Coordinate coor) {
-        if (0 <= coor.getR() && coor.getR() < Table.DEFAULT_SIZE && 0 <= coor.getC() && coor.getC() < Table.DEFAULT_SIZE) {
-            if (table[coor.getR()][coor.getC()] == null || table[coor.getR()][coor.getC()].getColor() != whoseTurn()) {
+        return checkMove(coor.getR(), coor.getC());
+    }
+
+    public boolean checkMove(int r, int c) {
+        if (0 <= r && r < Table.DEFAULT_SIZE && 0 <= c && c < Table.DEFAULT_SIZE) {
+            if (table[r][c] == null || table[r][c].getColor() != whoseTurn()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public List<Figure> getColoredFigures(Color color) {
+        List<Figure> result = new ArrayList<>();
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_SIZE; j++) {
+                if (table[i][j].getColor() == color) {
+                    result.add(table[i][j]);
+                }
+            }
+        }
+        return result;
     }
 }

@@ -1,8 +1,7 @@
 package models.figures;
 
-import javafx.util.Pair;
 import models.Color;
-import models.Consts;
+import models.Coordinate;
 import models.Table;
 
 import java.util.ArrayList;
@@ -16,16 +15,16 @@ public class Knight extends Figure {
     private static final int[] dc = new int[]{ 1,  2, 2, 1, -1, -2, -2, -1};
 
     public Knight(Table table, Color color) {
-        super(table, color);
+        super(table, color, FigureType.KNIGHT);
     }
 
-    public static List<Pair<Integer, Integer>> getPossibleMoves(Table table, int r, int c) {
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
+    public List<Coordinate> getPossibleMoves() {
+        List<Coordinate> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
             int newR = r + dr[i];
             int newC = c + dc[i];
             if (table.checkMove(newR, newC)) {
-                result.add(new Pair<>(newR, newC));
+                result.add(new Coordinate(newR, newC));
             }
         }
         return result;
