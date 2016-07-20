@@ -65,13 +65,24 @@ public class Table {
         return whoseTurn;
     }
 
-    public void nextTurn() {
+    public Table nextTurn() {
+        Move move;
+        Table new_table;
         if (whoseTurn == Color.WHITE) {
-            firstPlayer.turn();
-            whoseTurn = Color.BLACK;
+            move = firstPlayer.nextMove(this);
+            System.out.println("WHITE: " + move.from.getR() + " " + move.from.getC() + "|" +  move.to.getR() + " " + move.to.getC());
+
+            new_table = this.doMove(move);
+            new_table.whoseTurn = Color.BLACK;
+            return new_table;
         } else {
-            secondPlayer.turn();
-            whoseTurn = Color.WHITE;
+
+            move = secondPlayer.nextMove(this);
+            System.out.println("BLACK: " + move.from.getR() + " " + move.from.getC() + "|" +  move.to.getR() + " " + move.to.getC());
+
+            new_table = this.doMove(move);
+            new_table.whoseTurn = Color.WHITE;
+            return new_table;
         }
     }
 
@@ -87,7 +98,6 @@ public class Table {
         }
         return false;
     }
-
 
     public Table clone(){
         Figure[][] table = new Figure[DEFAULT_SIZE][DEFAULT_SIZE];
@@ -118,7 +128,9 @@ public class Table {
                             new_figure = new Pawn(tableObj, figure.getColor());
                             break;
                         }
-                        tableObj.table[i][j] = new_figure;
+                    new_figure.setCoor(new Coordinate(i,j));
+                    tableObj.table[i][j] = new_figure;
+
                     }
                 }
             }
@@ -131,12 +143,8 @@ public class Table {
 
         Table new_table = this.clone();
 
-        Figure figure = new_table.getFigure(coor_from);
-        figure.setCoor(coor_to);
-
-
+        new_table.table[coor_to.getR()][coor_to.getC()]     =  new_table.getFigure(coor_from).setCoor(coor_to);
         new_table.table[coor_from.getR()][coor_from.getC()] = null;
-        new_table.table[coor_to.getR()][coor_to.getC()]     = figure;
 
         return new_table;
 
@@ -144,10 +152,12 @@ public class Table {
 
     public List<Figure> getColoredFigures(Color color) {
         List<Figure> result = new ArrayList<>();
+
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
-                if (table[i][j] != null && table[i][j].getColor() == color) {
-                    result.add(table[i][j]);
+                Figure f = table[i][j];
+                if (f != null && f.getColor() == color) {
+                        result.add(f);
                 }
             }
         }

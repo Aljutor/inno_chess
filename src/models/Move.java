@@ -9,6 +9,6 @@ public class Move {
 
     public Move(Coordinate from, Coordinate to) {
         this.from = from;
-        this.to = to;
+        this.to   = to;
     }
 }

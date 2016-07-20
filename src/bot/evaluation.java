@@ -28,16 +28,22 @@ public class Evaluation {
             switch (f.getType()){
                 case KING:
                     rank += KING_VALUE;
+                    break;
                 case QUEEN:
                     rank += QUEEN_VALUE;
+                    break;
                 case ROOK:
                     rank += ROOK_VALUE;
+                    break;
                 case BISHOP:
                     rank += BISHOP_VALUE;
+                    break;
                 case KNIGHT:
                     rank += KNIGHT_VALUE;
+                    break;
                 case PAWN:
                     rank += PAWN_VALUE;
+                    break;
             }
         }
         return rank;

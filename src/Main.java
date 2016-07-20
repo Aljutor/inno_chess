@@ -14,9 +14,10 @@ public class Main {
         Bot botB = new Bot(Color.BLACK);
 
         Table table = new Table(botA, botB);
+        Move move;
 
-        Move move = botA.nextMove(table);
-        System.out.println(move.from.getR() + " " + move.from.getC() + "|" +  move.to.getR() + " " + move.to.getC());
-
+        for (int i = 0; i < 100; i++){
+            table = table.nextTurn();
+        }
     }
 }

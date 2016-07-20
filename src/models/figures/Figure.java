@@ -35,9 +35,10 @@ public abstract class Figure {
         return new Coordinate(r, c);
     }
 
-    public void setCoor(Coordinate coor) {
+    public Figure setCoor(Coordinate coor) {
         this.r = coor.getR();
         this.c = coor.getC();
+        return this;
     }
 
     public FigureType getType(){
