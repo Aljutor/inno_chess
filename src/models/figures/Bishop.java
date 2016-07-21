@@ -17,7 +17,7 @@ public class Bishop extends Figure {
         super(table, color, FigureType.BISHOP);
     }
 
-    public List<Move> getPossibleMoves() {
+    public List<Move> getMoves() {
         return applyArray(dr, dc);
     }
 }

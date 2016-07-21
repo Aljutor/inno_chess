@@ -15,12 +15,13 @@ public class Controller {
 
     private final Player blackPlayer;
 
-
     public Controller(Table table, Player whitePlayer, Player blackPlayer) {
         this.table = table;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
     }
+
+
 
     public void run() {
 

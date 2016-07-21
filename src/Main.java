@@ -10,6 +10,8 @@ public class Main {
 
     static int count = 0;
     static int captures = 0;
+    static int checks = 0;
+    static int mates = 0;
     static boolean captured = false;
 
     static void dfs(int v, Table table, Color color) {
@@ -20,6 +22,12 @@ public class Main {
 //        if (captured) {
 //            System.err.println(table);
 //        }
+        if (table.isCheck(color)) {
+            checks++;
+        }
+        if (table.isMate(color)) {
+            mates++;
+        }
         if (v == 0) {
             count++;
             return;
@@ -49,9 +57,11 @@ public class Main {
     public static void main(String[] args){
         Table table = new Table();
         System.out.println(table);
-        dfs(4, table, Color.WHITE);
-        System.out.println(count);
-        System.out.println(captures);
+        dfs(5, table, Color.WHITE);
+        System.out.printf("Count: %d\n", count);
+        System.out.printf("Captures: %d\n", captures);
+        System.out.printf("Checks: %d\n", checks);
+        System.out.printf("Mates: %d\n", mates);
 //        System.out.println(table.doMove(new Move(new Coordinate(6, 3), new Coordinate(4, 3)), Color.BLACK));
 //        for (int i = 0; i < 8; i++) {
 //            for (int j = 0; j < 8; j++) {
