@@ -1,6 +1,8 @@
 import bot.Bot;
 import models.*;
 import ui.AlgebraicNotation;
+import ui.Terminal;
+import ui.UserInterface;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,7 +19,9 @@ public class MainTest {
 
         Table table = new Table();
 
-        Controller controller = new Controller(table, botA, botB);
+        UserInterface ui = new Terminal();
+
+        GameSession gameSession = new GameSession(table, botA, botB, ui);
 
         PrintWriter out = null;
         PrintWriter pgn = null;
