@@ -33,20 +33,46 @@ public class Table {
     }
 
     public Table(int v) {
-        this();
-        table[0][5] = null;
-        table[0][6] = null;
-        table[1][3] = null;
-        table[1][4] = new Knight(this, Color.WHITE);
-        table[1][5] = new Knight(this, Color.BLACK);
-        table[3][2] = new Bishop(this, Color.WHITE);
-        table[5][2] = new Pawn(this, Color.BLACK);
-        table[6][2] = null;
-        table[6][3] = new Pawn(this, Color.WHITE);
-        table[6][4] = new Bishop(this, Color.BLACK);
-        table[7][4] = null;
-        table[7][5] = new King(this, Color.BLACK);
-        table[7][6] = null;
+        table = new Figure[DEFAULT_SIZE][];
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            table[i] = new Figure[DEFAULT_SIZE];
+        }
+        if (v == 1) {
+            table[0][5] = null;
+            table[0][6] = null;
+            table[1][3] = null;
+            table[1][4] = new Knight(this, Color.WHITE);
+            table[1][5] = new Knight(this, Color.BLACK);
+            table[3][2] = new Bishop(this, Color.WHITE);
+            table[5][2] = new Pawn(this, Color.BLACK);
+            table[6][2] = null;
+            table[6][3] = new Pawn(this, Color.WHITE);
+            table[6][4] = new Bishop(this, Color.BLACK);
+            table[7][4] = null;
+            table[7][5] = new King(this, Color.BLACK);
+            table[7][6] = null;
+        } else if (v == 2) {
+            table[0][7] = new King(this, Color.WHITE);
+            table[1][2] = new Rook(this, Color.WHITE);
+            table[1][4] = new Bishop(this, Color.WHITE);
+            table[2][5] = new Queen(this, Color.WHITE);
+            table[2][7] = new Knight(this, Color.WHITE);
+            table[3][6] = new Rook(this, Color.WHITE);
+            table[4][0] = new Pawn(this, Color.WHITE);
+            table[5][0] = new Pawn(this, Color.BLACK);
+            table[6][1] = new King(this, Color.BLACK);
+            table[7][1] = new Rook(this, Color.BLACK);
+            table[7][3] = new Rook(this, Color.BLACK);
+        } else if (v == 3) {
+            table[0] = new Figure[]{new Rook(this, Color.WHITE), new Knight(this, Color.WHITE), new Bishop(this, Color.WHITE), new Queen(this, Color.WHITE), new King(this, Color.WHITE), new Bishop(this, Color.WHITE), new Knight(this, Color.WHITE), new Rook(this, Color.WHITE)};
+            table[1] = new Figure[]{null, null, null, null, null, new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE)};
+
+            table[3] = new Figure[]{new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.BLACK), null, null, null, null};
+            table[4] = new Figure[]{null, null, null, null, null, new Pawn(this, Color.WHITE), null, null};
+            table[5] = new Figure[]{null, null, null, null, null, new Knight(this, Color.BLACK), new Pawn(this, Color.BLACK), new Bishop(this, Color.BLACK)};
+            table[6] = new Figure[]{new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Queen(this, Color.BLACK), null, null, new Pawn(this, Color.BLACK)};
+            table[7] = new Figure[]{new Rook(this, Color.BLACK), new Knight(this, Color.BLACK), new Bishop(this, Color.BLACK), null, new King(this, Color.BLACK), null, null, new Rook(this, Color.BLACK)};
+        }
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
                 if (table[i][j] != null) {

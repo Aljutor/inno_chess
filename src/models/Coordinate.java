@@ -32,6 +32,6 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return String.format("[%d;%d]", r, c);
+        return String.format("%s%d", String.valueOf((char)(c + 'a')), r + 1);
     }
 }
