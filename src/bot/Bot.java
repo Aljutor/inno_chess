@@ -17,7 +17,7 @@ public class Bot extends Player {
 
     public Move nextMove(Table table){
 //
-//        List<Figure> figureList = table.getColoredFigures(color);
+//        List<Figure> figureList = table.getFiguresByColor(color);
 //        Evaluation evaluation = new Evaluation();
 //        Random randomGenerator = new Random();
 //

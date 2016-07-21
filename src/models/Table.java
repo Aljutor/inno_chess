@@ -81,7 +81,6 @@ public class Table {
         return false;
     }
 
-
     public Table clone() {
         Figure[][] table = new Figure[DEFAULT_SIZE][DEFAULT_SIZE];
         Table tableObj = new Table(table);
@@ -158,7 +157,7 @@ public class Table {
         return true;
     }
 
-    public List<Figure> getColoredFigures(Color color) {
+    public List<Figure> getFiguresByColor(Color color) {
         List<Figure> result = new ArrayList<>();
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -169,6 +168,8 @@ public class Table {
         }
         return result;
     }
+
+
 
     @Override
     public String toString() {

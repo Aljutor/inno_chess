@@ -24,7 +24,7 @@ public class Main {
             count++;
             return;
         }
-        List<Figure> lift = table.getColoredFigures(color);
+        List<Figure> lift = table.getFiguresByColor(color);
         for (Figure f : lift) {
             List<Move> c = f.getPossibleMoves();
             for (Move co : c) {

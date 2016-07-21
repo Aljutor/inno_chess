@@ -54,11 +54,11 @@ public class Evaluation {
         int rank = 0, white_rank = 0, black_rank = 0;
         List<Figure> figureList;
 
-        figureList = table.getColoredFigures(Color.WHITE);
+        figureList = table.getFiguresByColor(Color.WHITE);
 
         white_rank += value_rank(figureList);
 
-        figureList = table.getColoredFigures(Color.BLACK);
+        figureList = table.getFiguresByColor(Color.BLACK);
 
         black_rank += value_rank(figureList);
 
