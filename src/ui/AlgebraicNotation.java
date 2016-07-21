@@ -1,7 +1,6 @@
 package ui;
 
-import javafx.beans.binding.StringBinding;
-import javafx.scene.control.Tab;
+import models.Coordinate;
 import models.Move;
 import models.Table;
 import models.figures.Figure;
@@ -12,9 +11,9 @@ import models.figures.FigureType;
  */
 public class AlgebraicNotation {
 
-    private static String columnToString(int n){
+    public static String coorToString(Coordinate coor){
         String column = "";
-        switch (n){
+        switch (coor.getC()){
             case 0:
                 column = "a";
                 break;
@@ -40,46 +39,58 @@ public class AlgebraicNotation {
                 column = "h";
                 break;
         }
-        return column;
+
+        return column + (coor.getR()+1);
+    }
+
+    public static String figurePrefix(Figure figure) {
+        return figureTypePrefix(figure.getType());
+    }
+
+    public static String figureTypePrefix(FigureType figureType){
+        String prefix = "";
+        switch (figureType){
+            case KING:
+                prefix = "K";
+                break;
+            case QUEEN:
+                prefix = "Q";
+                break;
+            case ROOK:
+                prefix = "R";
+                break;
+            case BISHOP:
+                prefix = "B";
+                break;
+            case KNIGHT:
+                prefix = "N";
+                break;
+            case PAWN:
+                prefix = "";
+                break;
+        }
+        return prefix;
+
     }
 
      public static String getString(Table table, Move move){
+         String prefix =  figurePrefix(table.getFigure(move.from));
 
-         String prefix = "";
-         Figure figure = table.getFigure(move.from);
-         switch (figure.getType()){
-             case KING:
-                 prefix = "K";
-                 break;
-             case QUEEN:
-                 prefix = "Q";
-                 break;
-             case ROOK:
-                 prefix = "R";
-                 break;
-             case BISHOP:
-                 prefix = "B";
-                 break;
-             case KNIGHT:
-                 prefix = "N";
-                 break;
-             case PAWN:
-                 prefix = "";
-                 break;
+         //Pawn promotion
+         if (move.castPawn != null){
+             String castPrefix = figureTypePrefix(move.castPawn);
+
+             return prefix+coorToString(move.to)+"="+castPrefix;
          }
 
-         String column = columnToString(move.to.getC());
-
-
-         String capture ="";
+         //Capture
          if (table.getFigure(move.to) != null){
-             if (figure.getType() == FigureType.PAWN){
-                 capture = columnToString(move.from.getC()) + "x";
-             }else
-                 capture = "x";
-
+             if (table.getFigure(move.from).getType() == FigureType.PAWN){
+                 return prefix+coorToString(move.from)+"x"+coorToString(move.to);
+             }
+             return prefix+"x"+coorToString(move.to);
          }
 
-         return prefix + capture + column + (move.to.getR() +1);
+         return prefix+ coorToString(move.to);
      }
 }

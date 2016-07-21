@@ -23,7 +23,7 @@ public class Bot extends Player {
         Random random = new Random();
 
 
-        /*
+
         while (true){
             Figure f =  figureList.get(random.nextInt(figureList.size()));
             List<Move> moves = f.getPossibleMoves();
@@ -38,9 +38,9 @@ public class Bot extends Player {
             }
         }
 
-        */
 
 
+        /*
         Evaluation evaluation = new Evaluation();
         int maxRank  = -90000; //Not best, but prevent no any move situation
         for (Figure f: figureList){
@@ -60,7 +60,7 @@ public class Bot extends Player {
 
 
         return nextMove;
-
+        */
     }
 
     @Override
