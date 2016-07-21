@@ -30,4 +30,9 @@ public class Move {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return to.toString();
+    }
 }

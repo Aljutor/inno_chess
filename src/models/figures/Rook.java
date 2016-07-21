@@ -17,7 +17,7 @@ public class Rook extends Figure {
         super(table, color, FigureType.ROOK);
     }
 
-    public List<Move> getPossibleMoves() {
+    public List<Move> getMoves() {
         return applyArray(dr, dc);
     }
 }

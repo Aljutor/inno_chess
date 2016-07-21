@@ -19,13 +19,14 @@ public class Knight extends Figure {
         super(table, color, FigureType.KNIGHT);
     }
 
-    public List<Move> getPossibleMoves() {
+    public List<Move> getMoves() {
         List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
             int newR = r() + dr[i];
             int newC = c() + dc[i];
-            if (table.checkMove(newR, newC, color)) {
-                result.add(new Move(coor, new Coordinate(newR, newC)));
+            if (table.checkMoveDumb(newR, newC, color)) {
+                Move move = new Move(coor, new Coordinate(newR, newC));
+                result.add(move);
             }
         }
         return result;
