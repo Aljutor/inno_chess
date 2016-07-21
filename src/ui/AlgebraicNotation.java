@@ -11,9 +11,9 @@ import models.figures.FigureType;
  */
 public class AlgebraicNotation {
 
-    public static String coorToString(Coordinate coor){
+    public static String colToString(int i){
         String column = "";
-        switch (coor.getC()){
+        switch (i){
             case 0:
                 column = "a";
                 break;
@@ -39,8 +39,11 @@ public class AlgebraicNotation {
                 column = "h";
                 break;
         }
+        return  column;
+    }
 
-        return column + (coor.getR()+1);
+    public static String coorToString(Coordinate coor){
+        return colToString(coor.getC()) + (coor.getR()+1);
     }
 
     public static String figurePrefix(Figure figure) {
@@ -79,18 +82,20 @@ public class AlgebraicNotation {
          //Pawn promotion
          if (move.castPawn != null){
              String castPrefix = figureTypePrefix(move.castPawn);
-
+             if (table.getFigure(move.to) != null){
+                 return prefix+colToString(move.from.getC()) + "x"+coorToString(move.to)+"="+castPrefix;
+             }
              return prefix+coorToString(move.to)+"="+castPrefix;
          }
 
          //Capture
          if (table.getFigure(move.to) != null){
              if (table.getFigure(move.from).getType() == FigureType.PAWN){
-                 return prefix+coorToString(move.from)+"x"+coorToString(move.to);
+                 return prefix+colToString(move.from.getC())+"x"+coorToString(move.to);
              }
+
              return prefix+"x"+coorToString(move.to);
          }
-
          return prefix+ coorToString(move.to);
      }
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Evaluation {
 
-    private int KING_VALUE   = 20000;
+    private int KING_VALUE   = 30000;
     private int QUEEN_VALUE  = 1710;
     private int ROOK_VALUE   = 824;
     private int BISHOP_VALUE = 572;
