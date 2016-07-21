@@ -16,40 +16,33 @@ public class Bot extends Player {
         super(name, color);
     }
 
-
-
     public Move nextMove(Table table){
-
+        this.moveCounter++;
         List<Figure> figureList = table.getFiguresByColor(color);
         Move nextMove = null;
+        Random random = new Random();
 
-        if (moveCounter < 5){ //First 4 stating moves will be random;
-            Random randomGenerator = new Random();
 
-            if (moveCounter == 0){
-                int pawnPosition = randomGenerator.nextInt(8);
-                if (this.color == color.WHITE)
-                {
-                    return new Move(new Coordinate(1, pawnPosition), new Coordinate(4, pawnPosition));
-                }else{
-                    return new Move(new Coordinate(6, pawnPosition), new Coordinate(4, pawnPosition));
+        /*
+        while (true){
+            Figure f =  figureList.get(random.nextInt(figureList.size()));
+            List<Move> moves = f.getPossibleMoves();
+            if (moves.size() > 0) {
+
+                Move move = moves.get(random.nextInt(moves.size()));
+                if (move.to.getR() == move.from.getR() && move.to.getC() == move.from.getC()){
+                    System.out.println("WTF");
                 }
-            }
+                return move;
 
-
-            boolean found = false;
-            while (!found){
-                List<Move> movies = figureList.get(randomGenerator.nextInt(figureList.size())).getPossibleMoves();
-                if (movies.size() > 0){
-                    found = true;
-                    return movies.get(randomGenerator.nextInt(movies.size()));
-                }
             }
         }
 
+        */
+
+
         Evaluation evaluation = new Evaluation();
         int maxRank  = -90000; //Not best, but prevent no any move situation
-
         for (Figure f: figureList){
             Coordinate position = f.getCoor();
             List<Move> moves = f.getPossibleMoves();
@@ -65,8 +58,9 @@ public class Bot extends Player {
             }
         }
 
-        this.moveCounter++;
+
         return nextMove;
+
     }
 
     @Override
