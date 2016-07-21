@@ -23,7 +23,7 @@ public class Terminal implements UserInterface {
         for (int i = 0; i < figures.length; i++){
             System.out.print(figures.length - i + "   ");
             for (int j = 0; j < figures[i].length; j++){
-                boolean isWhiteCell = (i + j) % 2 == 1;
+                boolean isWhiteCell = (i + j) % 2 == 0;
                 if (figures[i][j] == null) {
                     System.out.print(isWhiteCell ? "   " : "[ ]");
                     continue;
@@ -82,6 +82,15 @@ public class Terminal implements UserInterface {
     @Override
     public void showMatchHistory() {
 
+    }
+
+    @Override
+    public void showNicknameTyperView(MenuAction menuAction) {
+        System.out.println("Please, write the nickname of the first player:");
+
+        try (Scanner scanner = new Scanner(System.in)){
+//            if (menuAction.equals(MenuAction.PLAY_WITH_PLAYER))
+        }
     }
 
 

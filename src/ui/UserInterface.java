@@ -40,4 +40,10 @@ public interface UserInterface {
      */
     void showMatchHistory();
 
+    /**
+     *
+     * @param menuAction
+     */
+    void showNicknameTyperView(MenuAction menuAction);
+
 }
