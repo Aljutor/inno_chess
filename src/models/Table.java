@@ -239,21 +239,26 @@ public class Table {
         for (int i = DEFAULT_SIZE - 1; i >= 0; i--) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
                 Figure f = table[i][j];
+                String cur = ".";
                 if (f == null) {
-                    sb.append(".");
+                    cur = ".";
                 } else if (f.getType() == FigureType.ROOK){
-                    sb.append("R");
+                    cur = "R";
                 } else if (f.getType() == FigureType.BISHOP){
-                    sb.append("B");
+                    cur = "B";
                 } else if (f.getType() == FigureType.KING){
-                    sb.append("K");
+                    cur = "K";
                 } else if (f.getType() == FigureType.KNIGHT){
-                    sb.append("k");
+                    cur = "N";
                 } else if (f.getType() == FigureType.PAWN){
-                    sb.append("P");
+                    cur = "P";
                 } else if (f.getType() == FigureType.QUEEN){
-                    sb.append("Q");
+                    cur = "Q";
                 }
+                if (f != null && f.getColor() == Color.BLACK) {
+                    cur = cur.toLowerCase();
+                }
+                sb.append(cur);
             }
             sb.append("\n");
         }
