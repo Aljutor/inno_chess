@@ -17,12 +17,27 @@ public interface UserInterface {
         EXIT_GAME
     }
 
+    /**
+     * Shows up the chessboard
+     * @param t
+     */
     void showTable(Table t);
 
+    /**
+     * Output some message to the players
+     * @param message
+     */
     void showMessage(String message);
 
+    /**
+     * Output menu so player can choice game mode, see match history or exit the game
+     * @return
+     */
     MenuAction showMenu();
 
+    /**
+     * Shows match history to the player
+     */
     void showMatchHistory();
 
 }
