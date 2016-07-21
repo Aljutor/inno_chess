@@ -40,7 +40,7 @@ public class MainTest {
         for (int n = 1; n < 1000; n++){
             Move moveA = botA.nextMove(table.clone());
 
-            pgn.print(n +"." +AlgebraicNotation.getString(table,moveA) + "{" +  AlgebraicNotation.coorToString(moveA.from) +"}");
+            pgn.print(n +"." + AlgebraicNotation.getString(table,moveA));
 
             table.doMove(moveA,Color.WHITE);
 
@@ -53,7 +53,7 @@ public class MainTest {
 
             Move moveB = botB.nextMove(table.clone());
 
-            pgn.print(" "    +AlgebraicNotation.getString(table,moveB) +  "{" +  AlgebraicNotation.coorToString(moveB.from)  +"}" + "\n");
+            pgn.print(" "  + AlgebraicNotation.getString(table,moveB) + "\n");
 
             table.doMove(moveB,Color.BLACK);
 

@@ -11,14 +11,6 @@ import models.figures.FigureType;
  */
 public class AlgebraicNotation {
 
-    public static String colToString(int i){
-        return  String.valueOf((char)(i + 'a'));
-    }
-
-    public static String coorToString(Coordinate coor){
-        return colToString(coor.getC()) + (1 + coor.getR());
-    }
-
     public static String figurePrefix(Figure figure) {
         return figureTypePrefix(figure.getType());
     }
@@ -56,19 +48,18 @@ public class AlgebraicNotation {
          if (move.castPawn != null){
              String castPrefix = figureTypePrefix(move.castPawn);
              if (table.getFigure(move.to) != null){
-                 return prefix+colToString(move.from.getC()) + "x"+coorToString(move.to)+"="+castPrefix;
+                 return prefix+move.from.toString() + "x"+move.to.toString()+"="+castPrefix;
              }
-             return prefix+coorToString(move.to)+"="+castPrefix;
+             return prefix+move.to.toString()+"="+castPrefix;
          }
 
          //Capture
          if (table.getFigure(move.to) != null){
              if (table.getFigure(move.from).getType() == FigureType.PAWN){
-                 return prefix+colToString(move.from.getC())+"x"+coorToString(move.to);
+                 return prefix+move.from.toString()+"x"+move.to.toString();
              }
-
-             return prefix+coorToString(move.from)+"x"+coorToString(move.to);
+             return prefix+move.from.toString()+"x"+move.to.toString();
          }
-         return prefix+coorToString(move.from)+ coorToString(move.to);
+         return prefix+move.from.toString()+ move.to.toString();
      }
 }

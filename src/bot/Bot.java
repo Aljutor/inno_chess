@@ -22,6 +22,13 @@ public class Bot extends Player {
         this.moveCounter++;
         List<Figure> figureList = table.getFiguresByColor(color);
         Move nextMove = null;
+
+
+
+
+
+
+        
         if (random == null) {
             long time = System.currentTimeMillis();
             //time = 1469126667948L;
