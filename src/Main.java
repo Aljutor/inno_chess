@@ -55,20 +55,21 @@ public class Main {
     }
 
     public static void main(String[] args){
-        Table table = new Table();
+        Table table = new Table(3);
         System.out.println(table);
-        dfs(5, table, Color.WHITE);
+//        dfs(1, table, Color.WHITE);
         System.out.printf("Count: %d\n", count);
         System.out.printf("Captures: %d\n", captures);
         System.out.printf("Checks: %d\n", checks);
         System.out.printf("Mates: %d\n", mates);
 //        System.out.println(table.doMove(new Move(new Coordinate(6, 3), new Coordinate(4, 3)), Color.BLACK));
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (table.getFigure(i, j) != null) {
-//                    System.out.printf("%d%d %s\n", i, j, table.getFigure(i, j).getPossibleMoves());
-//                }
-//            }
-//        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Figure figure = table.getFigure(i, j);
+                if (figure != null) {
+                    System.out.printf("%s %s %s %s\n", new Coordinate(i, j), figure.getColor(), figure.getType(), figure.getPossibleMoves());
+                }
+            }
+        }
     }
 }
