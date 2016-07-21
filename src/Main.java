@@ -1,5 +1,6 @@
 import models.*;
 import models.figures.Figure;
+import ui.Terminal;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Main {
         }
         List<Figure> lift = table.getFiguresByColor(color);
         for (Figure f : lift) {
-            List<Move> c = f.getPossibleMoves();
+            List<Move> c = f.getLegalMoves();
             for (Move co : c) {
                 Table t = table.clone();
                 if (t.getFigure(co.to) != null) {
@@ -55,21 +56,24 @@ public class Main {
     }
 
     public static void main(String[] args){
-        Table table = new Table(3);
-        System.out.println(table);
+        Terminal t = new Terminal();
+        GameSession gs = new GameSession(t);
+        gs.run();
+//        Table table = new Table();
+//        System.out.println(table);
 //        dfs(1, table, Color.WHITE);
-        System.out.printf("Count: %d\n", count);
-        System.out.printf("Captures: %d\n", captures);
-        System.out.printf("Checks: %d\n", checks);
-        System.out.printf("Mates: %d\n", mates);
-//        System.out.println(table.doMove(new Move(new Coordinate(6, 3), new Coordinate(4, 3)), Color.BLACK));
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Figure figure = table.getFigure(i, j);
-                if (figure != null) {
-                    System.out.printf("%s %s %s %s\n", new Coordinate(i, j), figure.getColor(), figure.getType(), figure.getPossibleMoves());
-                }
-            }
-        }
+//        System.out.printf("Count: %d\n", count);
+//        System.out.printf("Captures: %d\n", captures);
+//        System.out.printf("Checks: %d\n", checks);
+//        System.out.printf("Mates: %d\n", mates);
+////        System.out.println(table.doMove(new Move(new Coordinate(6, 3), new Coordinate(4, 3)), Color.BLACK));
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                Figure figure = table.getFigure(i, j);
+//                if (figure != null) {
+//                    System.out.printf("%s %s %s %s\n", new Coordinate(i, j), figure.getColor(), figure.getType(), figure.getLegalMoves());
+//                }
+//            }
+//        }
     }
 }

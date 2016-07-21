@@ -21,7 +21,7 @@ public class MainTest {
 
         UserInterface ui = new Terminal();
 
-        GameSession gameSession = new GameSession(table, botA, botB, ui);
+        GameSession gameSession = new GameSession(ui);
 
         PrintWriter out = null;
         PrintWriter pgn = null;

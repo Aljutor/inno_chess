@@ -17,7 +17,7 @@ public class Queen extends Figure {
         super(table, color, FigureType.QUEEN);
     }
 
-    public List<Move> getMoves() {
+    public List<Move> getPseudoLegalMoves() {
         return applyArray(dr, dc);
     }
 }

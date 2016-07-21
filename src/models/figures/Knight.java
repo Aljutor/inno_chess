@@ -19,7 +19,7 @@ public class Knight extends Figure {
         super(table, color, FigureType.KNIGHT);
     }
 
-    public List<Move> getMoves() {
+    public List<Move> getPseudoLegalMoves() {
         List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
             int newR = r() + dr[i];

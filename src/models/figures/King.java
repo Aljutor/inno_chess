@@ -17,7 +17,7 @@ public class King extends Figure {
         super(table, color, FigureType.KING);
     }
 
-    public List<Move> getMoves() {
+    public List<Move> getPseudoLegalMoves() {
         List<Move> result = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {

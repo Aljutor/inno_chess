@@ -38,7 +38,7 @@ public class Bot extends Player {
 
         while (true){
             Figure f =  figureList.get(random.nextInt(figureList.size()));
-            List<Move> moves = f.getPossibleMoves();
+            List<Move> moves = f.getLegalMoves();
             if (moves.size() > 0) {
 
                 Move move = moves.get(random.nextInt(moves.size()));
@@ -58,7 +58,7 @@ public class Bot extends Player {
         int maxRank  = -90000; //Not best, but prevent no any move situation
         for (Figure f: figureList){
             Coordinate position = f.getCoor();
-            List<Move> moves = f.getPossibleMoves();
+            List<Move> moves = f.getLegalMoves();
 
             for (Move move: moves){
                 Table newTable = table.clone();
