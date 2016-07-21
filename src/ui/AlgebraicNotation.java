@@ -12,38 +12,11 @@ import models.figures.FigureType;
 public class AlgebraicNotation {
 
     public static String colToString(int i){
-        String column = "";
-        switch (i){
-            case 0:
-                column = "a";
-                break;
-            case 1:
-                column = "b";
-                break;
-            case 2:
-                column = "c";
-                break;
-            case 3:
-                column = "d";
-                break;
-            case 4:
-                column = "e";
-                break;
-            case 5:
-                column = "f";
-                break;
-            case 6:
-                column = "g";
-                break;
-            case 7:
-                column = "h";
-                break;
-        }
-        return  column;
+        return  String.valueOf((char)(i + 'a'));
     }
 
     public static String coorToString(Coordinate coor){
-        return colToString(coor.getC()) + (coor.getR()+1);
+        return colToString(coor.getC()) + (1 + coor.getR());
     }
 
     public static String figurePrefix(Figure figure) {
@@ -94,8 +67,8 @@ public class AlgebraicNotation {
                  return prefix+colToString(move.from.getC())+"x"+coorToString(move.to);
              }
 
-             return prefix+"x"+coorToString(move.to);
+             return prefix+coorToString(move.from)+"x"+coorToString(move.to);
          }
-         return prefix+ coorToString(move.to);
+         return prefix+coorToString(move.from)+ coorToString(move.to);
      }
 }

@@ -16,13 +16,18 @@ public class Bot extends Player {
         super(name, color);
     }
 
+    static Random random;
+
     public Move nextMove(Table table){
         this.moveCounter++;
         List<Figure> figureList = table.getFiguresByColor(color);
         Move nextMove = null;
-        Random random = new Random();
-
-
+        if (random == null) {
+            long time = System.currentTimeMillis();
+            //time = 1469126667948L;
+            System.out.printf("{Seed: %d}\n", time);
+            random = new Random(time);
+        }
 
         while (true){
             Figure f =  figureList.get(random.nextInt(figureList.size()));

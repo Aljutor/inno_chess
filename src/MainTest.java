@@ -2,6 +2,10 @@ import bot.Bot;
 import models.*;
 import ui.AlgebraicNotation;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
 /**
  * Created by Semyon Bessonov on 21.07.2016.
  */
@@ -15,7 +19,15 @@ public class MainTest {
 
         Controller controller = new Controller(table, botA, botB);
 
-        System.out.println("" +
+        PrintWriter out = null;
+        PrintWriter pgn = null;
+        try {
+            out = new PrintWriter(new FileOutputStream("output.txt"));
+            pgn = new PrintWriter(new FileOutputStream("output.pgn"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        pgn.println("" +
                 "[Event \"\"]\n" +
                 "[Site \"\"]\n" +
                 "[Date \"\"]\n" +
@@ -28,24 +40,29 @@ public class MainTest {
         for (int n = 1; n < 1000; n++){
             Move moveA = botA.nextMove(table.clone());
 
-            System.out.print(n +"." +AlgebraicNotation.getString(table,moveA) + "{" +  AlgebraicNotation.coorToString(moveA.from) +"}");
-
+            pgn.print(n +"." +AlgebraicNotation.getString(table,moveA) + "{" +  AlgebraicNotation.coorToString(moveA.from) +"}");
 
             table.doMove(moveA,Color.WHITE);
 
+            out.printf("Turn: %d\n", n);
+            out.println(table);
+
             if (table.isMate(Color.BLACK)){
-                System.exit(0);
+                break;
             }
 
             Move moveB = botB.nextMove(table.clone());
 
-            System.out.print(" "    +AlgebraicNotation.getString(table,moveB) +  "{" +  AlgebraicNotation.coorToString(moveB.from)  +"}" + "\n");
+            pgn.print(" "    +AlgebraicNotation.getString(table,moveB) +  "{" +  AlgebraicNotation.coorToString(moveB.from)  +"}" + "\n");
 
             table.doMove(moveB,Color.BLACK);
 
+            out.println(table);
             if (table.isMate(Color.WHITE)){
-                System.exit(0);
+                break;
             }
         }
+        out.close();
+        pgn.close();
     }
 }
