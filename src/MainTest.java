@@ -25,24 +25,27 @@ public class MainTest {
                 "[Result \"\"]"
         );
 
-        for (int n = 1; n < 100; n++){
+        for (int n = 1; n < 1000; n++){
             Move moveA = botA.nextMove(table.clone());
-            String moveStringA = AlgebraicNotation.getString(table,moveA);
+
+            System.out.print(n +"." +AlgebraicNotation.getString(table,moveA) + "{" +  AlgebraicNotation.coorToString(moveA.from) +"}");
+
+
             table.doMove(moveA,Color.WHITE);
 
+            if (table.isMate(Color.BLACK)){
+                System.exit(0);
+            }
 
             Move moveB = botB.nextMove(table.clone());
-            String moveStringB = AlgebraicNotation.getString(table,moveB);
+
+            System.out.print(" "    +AlgebraicNotation.getString(table,moveB) +  "{" +  AlgebraicNotation.coorToString(moveB.from)  +"}" + "\n");
+
             table.doMove(moveB,Color.BLACK);
 
-            System.out.println(n +". "
-                    + moveStringA   /*+ " {" + moveA.from.getC() +":" + moveA.from.getR() + " - " + moveA.to.getC() +":" + moveA.to.getR() + "}" */
-                    + " "
-                    + moveStringB   /*+  " {" + moveB.from.getC() +":" + moveB.from.getR() + " - " + moveB.to.getC() +":" + moveB.to.getR() + "}" */
-                    + " "
-            )
-            ;
+            if (table.isMate(Color.WHITE)){
+                System.exit(0);
+            }
         }
-
     }
 }
