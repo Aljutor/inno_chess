@@ -10,45 +10,59 @@ import java.util.Random;
  * Created by Semyon Bessonov on 20.07.2016.
  */
 public class Bot extends Player {
-
+    int moveCounter = 0;
     public Bot(String name, Color color) {
+
         super(name, color);
     }
 
     public Move nextMove(Table table){
-//
-//        List<Figure> figureList = table.getFiguresByColor(color);
-//        Evaluation evaluation = new Evaluation();
-//        Random randomGenerator = new Random();
-//
-//        int        maxRank  = -90000;
-//        //Use this as rank can be negative, so start value should be very low to prevent suck
-//
-//        //Getting random move to prevent no move situation;
-//        int rnd_indexFigures = randomGenerator.nextInt(figureList.size());
-//        int rnd_indexMoves   = randomGenerator.nextInt(figureList.get(rnd_indexFigures).getPossibleMoves().size());
-//
-//        Coordinate nextMove  =  figureList.get(rnd_indexFigures).getPossibleMoves().get(rnd_indexMoves);
-//        Coordinate startMove =  figureList.get(rnd_indexFigures).getCoor();
-//
-//        //Not best, but prevent no any move situation
-//
-//        for (Figure f: figureList){
-//            Coordinate position = f.getCoor();
-//            List<Coordinate> coordinates = f.getPossibleMoves();
-//
-//            for (Coordinate c: coordinates){
-//                Table new_table = table.doMove(new Move(position, c), color);
-//                int rank = evaluation.estimate(new_table);
-//
-//                if (rank > maxRank){
-//                    nextMove  = c;
-//                    startMove = position;
-//                }
-//            }
-//        }
-//        return new Move(startMove, nextMove);
-        return null;
+        this.moveCounter++;
+        List<Figure> figureList = table.getFiguresByColor(color);
+        Move nextMove = null;
+        Random random = new Random();
+
+
+
+        while (true){
+            Figure f =  figureList.get(random.nextInt(figureList.size()));
+            List<Move> moves = f.getPossibleMoves();
+            if (moves.size() > 0) {
+
+                Move move = moves.get(random.nextInt(moves.size()));
+                if (move.to.getR() == move.from.getR() && move.to.getC() == move.from.getC()){
+                    System.out.println("WTF");
+                }
+                return move;
+
+            }
+        }
+
+        /*
+
+
+
+        Evaluation evaluation = new Evaluation();
+        int maxRank  = -90000; //Not best, but prevent no any move situation
+        for (Figure f: figureList){
+            Coordinate position = f.getCoor();
+            List<Move> moves = f.getPossibleMoves();
+
+            for (Move move: moves){
+                Table newTable = table.clone();
+
+                newTable.doMove(move, this.getColor());
+
+                if (evaluation.estimate(newTable, this.color) > maxRank){
+                    nextMove = move;
+                }
+            }
+        }
+
+
+        return nextMove;
+        */
+
     }
 
     @Override

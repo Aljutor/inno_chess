@@ -72,10 +72,31 @@ public class Table {
         return table[r][c];
     }
 
-    public boolean checkMove(int r, int c, Color color) {
+    public boolean checkMoveDumb(int r, int c, Color color) {
         if (0 <= r && r < Table.DEFAULT_SIZE && 0 <= c && c < Table.DEFAULT_SIZE) {
             if (table[r][c] == null || table[r][c].getColor() != color) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCoordinate(Coordinate coor) {
+        if (0 <= coor.getR() && coor.getR() < Table.DEFAULT_SIZE) {
+            if (0 <= coor.getC() && coor.getC() < Table.DEFAULT_SIZE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkMove(Move move, Color color) {
+        if (checkCoordinate(move.from) && getFigure(move.from) != null && getFigure(move.from).getColor() == color) {
+            if (checkCoordinate(move.to) && (getFigure(move.to) == null || getFigure(move.to).getColor() != color)) {
+                Table copy = clone();
+                if (copy.doMove(move, color) && !copy.isCheck(color)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -126,9 +147,9 @@ public class Table {
         if (figure.getColor() != color) {
             return false;
         }
-        if (!figure.getPossibleMoves().contains(move)) {
-            return false;
-        }
+//        if (!figure.getPossibleMoves().contains(move)) {
+//            return false;
+//        }
 
         if (figure instanceof Pawn) {
             if ((color == Color.WHITE && coorTo.getR() == DEFAULT_SIZE - 1) ||
@@ -169,7 +190,48 @@ public class Table {
         return result;
     }
 
+    public Figure getFigureByType(Color color, FigureType type) {
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_SIZE; j++) {
+                if (table[i][j] != null && table[i][j].getColor() == color && table[i][j].getType() == type) {
+                    return table[i][j];
+                }
+            }
+        }
+        return null;
+    }
 
+    public boolean isCheck(Color color) {
+        Coordinate king = getFigureByType(color, FigureType.KING).getCoor();
+        List<Figure> figures = getFiguresByColor((color == Color.WHITE ? Color.BLACK : Color.WHITE));
+        for (Figure figure : figures) {
+            List<Move> moves = figure.getMoves();
+            for (Move move : moves) {
+                if (king.equals(move.to)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isMate(Color color) {
+        if (!isCheck(color)) {
+            return false;
+        }
+        List<Figure> figures = getFiguresByColor(color);
+        for (Figure figure : figures) {
+            List<Move> moves = figure.getMoves();
+            for (Move move : moves) {
+                Table copy = clone();
+                copy.doMove(move, color);
+                if (!copy.isCheck(color)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     @Override
     public String toString() {

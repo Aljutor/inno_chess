@@ -11,14 +11,12 @@ import java.util.List;
  */
 public class Evaluation {
 
-    private int KING_VALUE   = 20000;
+    private int KING_VALUE   = 30000;
     private int QUEEN_VALUE  = 1710;
     private int ROOK_VALUE   = 824;
     private int BISHOP_VALUE = 572;
     private int KNIGHT_VALUE = 521;
     private int PAWN_VALUE   = 100;
-
-
 
     public int value_rank(List<Figure> figures){
         int rank = 0;
@@ -49,7 +47,7 @@ public class Evaluation {
         return rank;
     }
 
-    public int estimate(Table table){
+    public int estimate(Table table, Color color){
 
         int rank = 0, white_rank = 0, black_rank = 0;
         List<Figure> figureList;
@@ -63,14 +61,14 @@ public class Evaluation {
         black_rank += value_rank(figureList);
 
 
-//        switch (table.whoseTurn()){
-//            case WHITE:
-//                rank = (white_rank - black_rank);
-//                break;
-//            case BLACK:
-//                rank = (black_rank - white_rank);
-//                break;
-//        }
+        switch (color){
+            case WHITE:
+                rank = (white_rank - black_rank);
+                break;
+            case BLACK:
+                rank = (black_rank - white_rank);
+                break;
+        }
 
         return rank;
     }
