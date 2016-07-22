@@ -13,7 +13,7 @@ import java.util.Random;
 public class Bot extends Player {
     int moveCounter = 0;
 
-    int DEPTH =   4;
+    int DEPTH =   3;
     int ALPHA =   -90000000;
     int BETA  =   90000000;
 
@@ -65,6 +65,12 @@ public class Bot extends Player {
                 }
             }
         }
+
+
+        if (nextMove == null) {
+            System.out.println("{STRANGE NO MOVE FOUND}");
+        }
+
         return nextMove;
     }
 
