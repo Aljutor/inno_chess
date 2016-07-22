@@ -14,7 +14,7 @@ public class Coordinate {
     }
 
     public Coordinate(String s) {
-        if (s.charAt(1) < '1' || s.charAt(1) > '8' || s.charAt(0) < 'a' || s.charAt(0) > 'h'){
+        if (s.length() < 2 || s.charAt(1) < '1' || s.charAt(1) > '8' || s.charAt(0) < 'a' || s.charAt(0) > 'h'){
             throw new IllegalArgumentException();
         }
         this.r = s.charAt(1) - '1';

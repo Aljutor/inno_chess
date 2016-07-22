@@ -30,18 +30,25 @@ public class GameSession {
     public GameSession(UserInterface ui) {
         this.table = new Table();
         this.ui = ui;
+
+        String whitePlayerName;
+        String blackPlayerName;
+
         MenuAction menuAction = ui.showMenu();
         switch (menuAction){
             case PLAY_WITH_BOT:
                 System.out.println("Please, write you nickname:");
-                whitePlayer = new Bot("white", Color.WHITE);
+                whitePlayerName = ui.showNicknameTypeView();
+                whitePlayer = new HumanPlayer(whitePlayerName, Color.WHITE);
                 blackPlayer = new Bot("black", Color.BLACK);
                 break;
             case PLAY_WITH_PLAYER:
                 System.out.println("Please, write nickname of the first player:");
-                whitePlayer = new Bot("white", Color.WHITE);
+                whitePlayerName = ui.showNicknameTypeView();
+                whitePlayer = new HumanPlayer(whitePlayerName, Color.WHITE);
                 System.out.println("Please, write nickname of the second player:");
-                blackPlayer = new Bot("black", Color.BLACK);
+                blackPlayerName = ui.showNicknameTypeView();
+                blackPlayer = new HumanPlayer(blackPlayerName, Color.BLACK);
                 break;
             case BOT_WITH_BOT:
             default:

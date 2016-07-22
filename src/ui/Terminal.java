@@ -11,6 +11,8 @@ import java.util.Scanner;
  */
 public class Terminal implements UserInterface {
 
+    public static Scanner scanner = new Scanner(System.in);
+
     @Override
     public void showTable(Table t) {
         Figure[][] figures = t.getTable();
@@ -21,10 +23,10 @@ public class Terminal implements UserInterface {
             System.out.print(" " + (char)(i + 65) + " ");
         System.out.println();
         System.out.println();
-        for (int i = 0; i < figures.length; i++){
-            System.out.print(figures.length - i + "   ");
+        for (int i = figures.length - 1; i >= 0; i--){
+            System.out.print((i + 1) + "   ");
             for (int j = 0; j < figures[i].length; j++){
-                boolean isWhiteCell = (i + j) % 2 == 0;
+                boolean isWhiteCell = (i + j) % 2 == 1;
                 if (figures[i][j] == null) {
                     System.out.print(isWhiteCell ? "   " : "[ ]");
                     continue;
@@ -41,7 +43,7 @@ public class Terminal implements UserInterface {
                 }
 
             }
-            System.out.println("   " + (figures.length - i));
+            System.out.println("   " + (i + 1));
         }
         System.out.println();
         System.out.print("    ");
@@ -58,7 +60,8 @@ public class Terminal implements UserInterface {
     @Override
     public MenuAction showMenu() {
 
-        try(Scanner scanner = new Scanner(System.in)){
+//        try(Scanner scanner = this.scanner){
+        try {
             printChoiceOptions();
 
             while (true){
@@ -78,7 +81,10 @@ public class Terminal implements UserInterface {
                         break;
                 }
             }
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
+        return MenuAction.EXIT_GAME;
     }
 
     private void printChoiceOptions(){
@@ -108,46 +114,23 @@ public class Terminal implements UserInterface {
     public String showNicknameTypeView() {
         String name = "";
 
-        try (Scanner scanner = new Scanner(System.in)){
+//        try (Scanner scanner = new Scanner(System.in)){
+        try {
           name = scanner.nextLine();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return name;
     }
 
     @Override
-    public Move showMoveTypeView() { // a2 - 10, h7 - 67
-        Move move = null;
-
-        String fromCoordinates = "";
-        String toCoordinates = "";
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                try {
-                    System.out.println("Write where do you want to move FROM: (Example: f5)");
-                    fromCoordinates = scanner.nextLine();
-                    System.out.println("Write where do you want to move TO: (Example: f5)");
-                    toCoordinates = scanner.nextLine();
-
-                    move = new Move(new Coordinate(fromCoordinates), new Coordinate(toCoordinates));
-                    break;
-                } catch (IllegalArgumentException iae) {
-                    System.out.println("You can't choice the cell that is not in the board!");
-                }
-            }
-        }
-
-        return move;
-    }
-
-    @Override
     public void actionToContinue() {
         System.out.println("Press enter to continue...");
 
-        try (Scanner scanner = new Scanner(System.in)){
-            scanner.nextLine();
-        }
+//        try (Scanner scanner = new Scanner(System.in)){
+//            scanner.nextLine();
+//        }
     }
 
     public static String makeBold(String str){

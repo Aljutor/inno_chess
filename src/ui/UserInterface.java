@@ -47,12 +47,6 @@ public interface UserInterface {
     String showNicknameTypeView();
 
     /**
-     * Input for choosing where to move
-     * @return
-     */
-    Move showMoveTypeView();
-
-    /**
      * Process some action to continue game or go back to the menu
      */
     void actionToContinue();
