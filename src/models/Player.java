@@ -4,7 +4,7 @@ package models;
  * Created by ilnar on 18.07.16.
  */
 public abstract class Player {
-    protected String name;
+    protected final String name;
     protected final Color color;
 
     protected Player(String name, Color color) {
@@ -18,10 +18,6 @@ public abstract class Player {
 
     public Color getColor() {
         return color;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public abstract Move nextMove(Table table);

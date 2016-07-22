@@ -64,8 +64,8 @@ public abstract class Figure {
         return result;
     }
 
-    public List<Move> getPossibleMoves() {
-        List<Move> possible = getMoves();
+    public List<Move> getLegalMoves() {
+        List<Move> possible = getPseudoLegalMoves();
         List<Move> valid = new ArrayList<>();
         for (Move move : possible) {
             if (table.checkMove(move, color)) {
@@ -74,6 +74,6 @@ public abstract class Figure {
         }
         return valid;
     }
-    abstract public List<Move> getMoves();
+    abstract public List<Move> getPseudoLegalMoves();
 }
 

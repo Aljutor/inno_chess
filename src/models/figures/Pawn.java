@@ -28,7 +28,7 @@ public class Pawn extends Figure {
         }
     }
 
-    public List<Move> getMoves() {
+    public List<Move> getPseudoLegalMoves() {
         List<Move> result = new LinkedList<>();
         int koff = 1;
         if (color == Color.BLACK) {

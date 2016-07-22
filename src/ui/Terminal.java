@@ -83,7 +83,7 @@ public class Terminal implements UserInterface {
 
     @Override
     public void showMatchHistory() {
-        
+
     }
 
     @Override

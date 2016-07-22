@@ -72,6 +72,12 @@ public class Table {
             table[5] = new Figure[]{null, null, null, null, null, new Knight(this, Color.BLACK), new Pawn(this, Color.BLACK), new Bishop(this, Color.BLACK)};
             table[6] = new Figure[]{new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Queen(this, Color.BLACK), null, null, new Pawn(this, Color.BLACK)};
             table[7] = new Figure[]{new Rook(this, Color.BLACK), new Knight(this, Color.BLACK), new Bishop(this, Color.BLACK), null, new King(this, Color.BLACK), null, null, new Rook(this, Color.BLACK)};
+        } else if (v == 4) {
+            table[3][2] = new Rook(this, Color.BLACK);
+            table[4][0] = new Pawn(this, Color.BLACK);
+            table[5][2] = new King(this, Color.BLACK);
+            table[6][6] = new King(this, Color.WHITE);
+            table[7][5] = new Rook(this, Color.BLACK);
         }
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -173,9 +179,9 @@ public class Table {
         if (figure.getColor() != color) {
             return false;
         }
-//        if (!figure.getPossibleMoves().contains(move)) {
-//            return false;
-//        }
+        if (!figure.getPseudoLegalMoves().contains(move)) {
+            return false;
+        }
 
         if (figure instanceof Pawn) {
             if ((color == Color.WHITE && coorTo.getR() == DEFAULT_SIZE - 1) ||
@@ -216,6 +222,14 @@ public class Table {
         return result;
     }
 
+    public List<Move> getMovesByColor(Color color) {
+        List<Move> result = new ArrayList<>();
+        getFiguresByColor(color).forEach(figure -> {
+            result.addAll(figure.getPseudoLegalMoves());
+        });
+        return result;
+    }
+
     public Figure getFigureByType(Color color, FigureType type) {
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -229,13 +243,10 @@ public class Table {
 
     public boolean isCheck(Color color) {
         Coordinate king = getFigureByType(color, FigureType.KING).getCoor();
-        List<Figure> figures = getFiguresByColor((color == Color.WHITE ? Color.BLACK : Color.WHITE));
-        for (Figure figure : figures) {
-            List<Move> moves = figure.getMoves();
-            for (Move move : moves) {
-                if (king.equals(move.to)) {
-                    return true;
-                }
+        List<Move> moves = getMovesByColor((color == Color.WHITE ? Color.BLACK : Color.WHITE));
+        for (Move move : moves) {
+            if (king.equals(move.to)) {
+                return true;
             }
         }
         return false;
@@ -245,18 +256,19 @@ public class Table {
         if (!isCheck(color)) {
             return false;
         }
-        List<Figure> figures = getFiguresByColor(color);
-        for (Figure figure : figures) {
-            List<Move> moves = figure.getMoves();
-            for (Move move : moves) {
-                Table copy = clone();
-                copy.doMove(move, color);
-                if (!copy.isCheck(color)) {
-                    return false;
-                }
+        List<Move> moves = getMovesByColor(color);
+        for (Move move : moves) {
+            Table copy = clone();
+            copy.doMove(move, color);
+            if (!copy.isCheck(color)) {
+                return false;
             }
         }
         return true;
+    }
+
+    public boolean isStalemate(Color color) {
+        return !isMate(color) && getMovesByColor(color).size() == 0;
     }
 
     @Override
