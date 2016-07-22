@@ -11,8 +11,19 @@ import java.util.Scanner;
  */
 public class Terminal implements UserInterface {
 
+    long lastShowTime;
+
     @Override
     public void showTable(Table t) {
+        long curTime = System.currentTimeMillis();
+        while (curTime - lastShowTime < 1500) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+            curTime = System.currentTimeMillis();
+        }
+        lastShowTime = curTime;
         Figure[][] figures = t.getTable();
         System.out.println();
         System.out.println();

@@ -30,22 +30,40 @@ public abstract class Figure {
         return color;
     }
 
+    /**
+     * Get {@link Coordinate} of figure.
+     * @return
+     */
     public Coordinate getCoor() {
         return coor;
     }
 
-    protected int r() {
+    /**
+     * Get row coordinate of figure.
+     * @return
+     */
+    protected int getR() {
         return coor.getR();
     }
 
-    protected int c() {
+    /**
+     * Get column coordinate of figure.
+     * @return
+     */
+    protected int getC() {
         return coor.getC();
     }
 
+    /**
+     * Set coordinate of figure.
+     * @param coor
+     * @return
+     */
     public Figure setCoor(Coordinate coor) {
         this.coor = coor;
         return this;
     }
+
 
     public FigureType getType(){
         return type;
@@ -54,7 +72,7 @@ public abstract class Figure {
     protected List<Move> applyArray(int[] dr, int[] dc) {
         List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
-            for (int newR = r() + dr[i], newC = c() + dc[i]; table.checkMoveDumb(newR, newC, color); newR += dr[i], newC += dc[i]) {
+            for (int newR = getR() + dr[i], newC = getC() + dc[i]; table.checkMoveDumb(newR, newC, color); newR += dr[i], newC += dc[i]) {
                 result.add(new Move(coor, new Coordinate(newR, newC)));
                 if (table.getFigure(newR, newC) != null) {
                     break;
@@ -74,6 +92,13 @@ public abstract class Figure {
         }
         return valid;
     }
+
+    /**
+     * Get all pseudo-legal moves.
+     * <p>
+     * Pseudo legal moves includes .
+     * @return
+     */
     abstract public List<Move> getPseudoLegalMoves();
 }
 

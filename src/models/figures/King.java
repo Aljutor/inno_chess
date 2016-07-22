@@ -22,8 +22,8 @@ public class King extends Figure {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (!(i == 0 && j == 0)) {
-                    if (table.checkMoveDumb(r() + i, c() + j, color)) {
-                        Move move = new Move(coor, new Coordinate(r() + i, c() + j));
+                    if (table.checkMoveDumb(getR() + i, getC() + j, color)) {
+                        Move move = new Move(coor, new Coordinate(getR() + i, getC() + j));
                         result.add(move);
                     }
                 }
