@@ -14,73 +14,44 @@ public class Table {
     private final Figure[][] table;
 
     public Table() {
-        table = new Figure[DEFAULT_SIZE][];
-        table[0] = new Figure[]{new Rook(this, Color.WHITE), new Knight(this, Color.WHITE), new Bishop(this, Color.WHITE), new Queen(this, Color.WHITE), new King(this, Color.WHITE), new Bishop(this, Color.WHITE), new Knight(this, Color.WHITE), new Rook(this, Color.WHITE)};
-        table[1] = new Figure[]{new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE)};
-        table[2] = new Figure[DEFAULT_SIZE];
-        table[3] = new Figure[DEFAULT_SIZE];
-        table[4] = new Figure[DEFAULT_SIZE];
-        table[5] = new Figure[DEFAULT_SIZE];
-        table[6] = new Figure[]{new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK)};
-        table[7] = new Figure[]{new Rook(this, Color.BLACK), new Knight(this, Color.BLACK), new Bishop(this, Color.BLACK), new Queen(this, Color.BLACK), new King(this, Color.BLACK), new Bishop(this, Color.BLACK), new Knight(this, Color.BLACK), new Rook(this, Color.BLACK)};
-        for (int i = 0; i < DEFAULT_SIZE; i++) {
-            for (int j = 0; j < DEFAULT_SIZE; j++) {
-                if (table[i][j] != null) {
-                    table[i][j].setCoor(new Coordinate(i, j));
-                }
-            }
-        }
+        this(new String[]{
+                "rnbqkbnr",
+                "pppppppp",
+                "........",
+                "........",
+                "........",
+                "........",
+                "PPPPPPPP",
+                "RNBQKBNR"
+        });
     }
 
-    public Table(int v) {
+    public Table(String[] board) {
         table = new Figure[DEFAULT_SIZE][];
-        for (int i = 0; i < DEFAULT_SIZE; i++) {
+        for (int i = DEFAULT_SIZE - 1; i >= 0; i--) {
             table[i] = new Figure[DEFAULT_SIZE];
-        }
-        if (v == 1) {
-            table[0][5] = null;
-            table[0][6] = null;
-            table[1][3] = null;
-            table[1][4] = new Knight(this, Color.WHITE);
-            table[1][5] = new Knight(this, Color.BLACK);
-            table[3][2] = new Bishop(this, Color.WHITE);
-            table[5][2] = new Pawn(this, Color.BLACK);
-            table[6][2] = null;
-            table[6][3] = new Pawn(this, Color.WHITE);
-            table[6][4] = new Bishop(this, Color.BLACK);
-            table[7][4] = null;
-            table[7][5] = new King(this, Color.BLACK);
-            table[7][6] = null;
-        } else if (v == 2) {
-            table[0][7] = new King(this, Color.WHITE);
-            table[1][2] = new Rook(this, Color.WHITE);
-            table[1][4] = new Bishop(this, Color.WHITE);
-            table[2][5] = new Queen(this, Color.WHITE);
-            table[2][7] = new Knight(this, Color.WHITE);
-            table[3][6] = new Rook(this, Color.WHITE);
-            table[4][0] = new Pawn(this, Color.WHITE);
-            table[5][0] = new Pawn(this, Color.BLACK);
-            table[6][1] = new King(this, Color.BLACK);
-            table[7][1] = new Rook(this, Color.BLACK);
-            table[7][3] = new Rook(this, Color.BLACK);
-        } else if (v == 3) {
-            table[0] = new Figure[]{new Rook(this, Color.WHITE), new Knight(this, Color.WHITE), new Bishop(this, Color.WHITE), new Queen(this, Color.WHITE), new King(this, Color.WHITE), new Bishop(this, Color.WHITE), new Knight(this, Color.WHITE), new Rook(this, Color.WHITE)};
-            table[1] = new Figure[]{null, null, null, null, null, new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE)};
-
-            table[3] = new Figure[]{new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.WHITE), new Pawn(this, Color.BLACK), null, null, null, null};
-            table[4] = new Figure[]{null, null, null, null, null, new Pawn(this, Color.WHITE), null, null};
-            table[5] = new Figure[]{null, null, null, null, null, new Knight(this, Color.BLACK), new Pawn(this, Color.BLACK), new Bishop(this, Color.BLACK)};
-            table[6] = new Figure[]{new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Pawn(this, Color.BLACK), new Queen(this, Color.BLACK), null, null, new Pawn(this, Color.BLACK)};
-            table[7] = new Figure[]{new Rook(this, Color.BLACK), new Knight(this, Color.BLACK), new Bishop(this, Color.BLACK), null, new King(this, Color.BLACK), null, null, new Rook(this, Color.BLACK)};
-        } else if (v == 4) {
-            table[3][2] = new Rook(this, Color.BLACK);
-            table[4][0] = new Pawn(this, Color.BLACK);
-            table[5][2] = new King(this, Color.BLACK);
-            table[6][6] = new King(this, Color.WHITE);
-            table[7][5] = new Rook(this, Color.BLACK);
-        }
-        for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
+                Color c = Character.isUpperCase(board[i].charAt(j)) ? Color.WHITE : Color.BLACK;
+                switch (Character.toUpperCase(board[i].charAt(j))) {
+                    case 'R':
+                        table[i][j] = new Rook(this, c);
+                        break;
+                    case 'B':
+                        table[i][j] = new Bishop(this, c);
+                        break;
+                    case 'K':
+                        table[i][j] = new King(this, c);
+                        break;
+                    case 'N':
+                        table[i][j] = new Knight(this, c);
+                        break;
+                    case 'P':
+                        table[i][j] = new Pawn(this, c);
+                        break;
+                    case 'Q':
+                        table[i][j] = new Queen(this, c);
+                        break;
+                }
                 if (table[i][j] != null) {
                     table[i][j].setCoor(new Coordinate(i, j));
                 }
@@ -88,7 +59,7 @@ public class Table {
         }
     }
 
-    public Table(Figure[][] table) {
+    private Table(Figure[][] table) {
         this.table = table;
     }
 
@@ -104,6 +75,13 @@ public class Table {
         return table[r][c];
     }
 
+    /**
+     * Don't use this method. Use {@link #checkCoordinate(Coordinate)} instead.
+     * @param r
+     * @param c
+     * @param color
+     * @return
+     */
     public boolean checkMoveDumb(int r, int c, Color color) {
         if (0 <= r && r < Table.DEFAULT_SIZE && 0 <= c && c < Table.DEFAULT_SIZE) {
             if (table[r][c] == null || table[r][c].getColor() != color) {
@@ -113,6 +91,11 @@ public class Table {
         return false;
     }
 
+    /**
+     * Check if {@code coor} firs the table.
+     * @param coor
+     * @return
+     */
     private boolean checkCoordinate(Coordinate coor) {
         if (0 <= coor.getR() && coor.getR() < Table.DEFAULT_SIZE) {
             if (0 <= coor.getC() && coor.getC() < Table.DEFAULT_SIZE) {
@@ -122,6 +105,15 @@ public class Table {
         return false;
     }
 
+    /**
+     * Check is {@code move} is valid for {@code color}.
+     *
+     * {@link Move} is valid, if it fits table size
+     * and {@link #isCheck(Color)} will be false.
+     * @param move
+     * @param color
+     * @return
+     */
     public boolean checkMove(Move move, Color color) {
         if (checkCoordinate(move.from) && getFigure(move.from) != null && getFigure(move.from).getColor() == color) {
             if (checkCoordinate(move.to) && (getFigure(move.to) == null || getFigure(move.to).getColor() != color)) {
@@ -134,6 +126,7 @@ public class Table {
         return false;
     }
 
+    @Override
     public Table clone() {
         Figure[][] table = new Figure[DEFAULT_SIZE][DEFAULT_SIZE];
         Table tableObj = new Table(table);
@@ -171,6 +164,13 @@ public class Table {
         return tableObj;
     }
 
+    /**
+     * Tries to make {@code move}.
+     * @param move move to be applied.
+     * @param color whose turn is now
+     * @return true is valid move was applied, false otherwise.
+     * @see Move
+     */
     public boolean doMove(Move move, Color color) {
         Coordinate coorFrom = move.from;
         Coordinate coorTo = move.to;
@@ -210,6 +210,11 @@ public class Table {
         return true;
     }
 
+    /**
+     * Get all figures list with given {@code color}.
+     * @param color
+     * @return
+     */
     public List<Figure> getFiguresByColor(Color color) {
         List<Figure> result = new ArrayList<>();
         for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -222,6 +227,12 @@ public class Table {
         return result;
     }
 
+    /**
+     * Get all pseudo-legal moves for {@code color}.
+     * <p>
+     * @param color Player's color
+     * @return list of all moves available
+     */
     public List<Move> getMovesByColor(Color color) {
         List<Move> result = new ArrayList<>();
         getFiguresByColor(color).forEach(figure -> {
@@ -230,6 +241,12 @@ public class Table {
         return result;
     }
 
+    /**
+     * Get first figure with given {@code color} and {@code type}.
+     * @param color figure's color
+     * @param type figure's type
+     * @return {@link null} is no figure on table, else {@link Figure} itself.
+     */
     public Figure getFigureByType(Color color, FigureType type) {
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -241,6 +258,14 @@ public class Table {
         return null;
     }
 
+    /**
+     * Check there is check for {@code color} player.
+     * <p>
+     * Check is a game position, when {@link King} is
+     * under attack, but threat can be removed.
+     * @param color Player's color
+     * @return
+     */
     public boolean isCheck(Color color) {
         Coordinate king = getFigureByType(color, FigureType.KING).getCoor();
         List<Move> moves = getMovesByColor((color == Color.WHITE ? Color.BLACK : Color.WHITE));
@@ -252,6 +277,14 @@ public class Table {
         return false;
     }
 
+    /**
+     * Check there is checkmate for {@code color} player.
+     * <p>
+     * Checkmate is a game position, when {@link King} is
+     * under attack and there is no way to remove the threat.
+     * @param color Player's color
+     * @return
+     */
     public boolean isMate(Color color) {
         if (!isCheck(color)) {
             return false;
@@ -267,6 +300,14 @@ public class Table {
         return true;
     }
 
+    /**
+     * Check if player {@code color}> has stalemate or not.
+     * <p>
+     * Stalemate is game position, when {@code color} player
+     * has no valid moves and there is {@link #isCheck(Color)} is false.
+     * @param color Player's color
+     * @return
+     */
     public boolean isStalemate(Color color) {
         return !isMate(color) && getMovesByColor(color).size() == 0;
     }
