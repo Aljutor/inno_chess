@@ -1,5 +1,6 @@
 package ui;
 
+import models.Move;
 import models.Table;
 
 import java.util.Scanner;
@@ -41,9 +42,14 @@ public interface UserInterface {
     void showMatchHistory();
 
     /**
-     *
-     * @param menuAction
+     * Shows view for nickname input
      */
-    void showNicknameTyperView(MenuAction menuAction);
+    String showNicknameTypeView();
+
+    /**
+     * Input for choosing where to move
+     * @return
+     */
+    Move showMoveTypeView();
 
 }

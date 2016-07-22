@@ -1,5 +1,7 @@
 package ui;
 
+import models.Coordinate;
+import models.Move;
 import models.Table;
 import models.figures.Figure;
 
@@ -81,16 +83,44 @@ public class Terminal implements UserInterface {
 
     @Override
     public void showMatchHistory() {
-
+        
     }
 
     @Override
-    public void showNicknameTyperView(MenuAction menuAction) {
-        System.out.println("Please, write the nickname of the first player:");
+    public String showNicknameTypeView() {
+        String name = "";
 
         try (Scanner scanner = new Scanner(System.in)){
-//            if (menuAction.equals(MenuAction.PLAY_WITH_PLAYER))
+          name = scanner.nextLine();
         }
+
+        return name;
+    }
+
+    @Override
+    public Move showMoveTypeView() { // a2 - 10, h7 - 67
+        Move move = null;
+
+        String fromCoordinates = "";
+        String toCoordinates = "";
+
+        try (Scanner scanner = new Scanner(System.in)){
+            while (true){
+                try {
+                    System.out.println("Write where do you want to move FROM: (Example: f5)");
+                    fromCoordinates = scanner.nextLine();
+                    System.out.println("Write where do you want to move TO: (Example: f5)");
+                    toCoordinates = scanner.nextLine();
+
+                    move = new Move(new Coordinate(fromCoordinates), new Coordinate(toCoordinates));
+                    break;
+                }catch (IllegalArgumentException iae){
+                    System.out.println("You can't chooice the cell that is not in the board!");
+                }
+            }
+        }
+
+        return move;
     }
 
 

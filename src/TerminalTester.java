@@ -10,9 +10,10 @@ public class TerminalTester {
     public static void main(String[] args) {
         UserInterface terminal = new Terminal();
 
-        terminal.showMenu();
+//        terminal.showMenu();
 //        terminal.showMessage("Message from Controller");
 //        terminal.showTable(new Table());
+        terminal.showMoveTypeView();
     }
 
 }

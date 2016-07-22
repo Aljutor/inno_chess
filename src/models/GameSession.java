@@ -1,8 +1,5 @@
 package models;
 
-import models.Move;
-import models.Player;
-import models.Table;
 import ui.UserInterface;
 
 import static ui.UserInterface.*;
@@ -33,14 +30,14 @@ public class GameSession {
         switch (menuAction){
             case PLAY_WITH_BOT:
                 System.out.println("Please, write you nickname:");
-//                whitePlayer.setName(ui.showNicknameTyperView());
+                whitePlayer.setName(ui.showNicknameTypeView());
                 blackPlayer.setName("BOT");
                 break;
             case PLAY_WITH_PLAYER:
                 System.out.println("Please, write nickname of the first player:");
-//                whitePlayer.setName(ui.showNicknameTyperView());
+                whitePlayer.setName(ui.showNicknameTypeView());
                 System.out.println("Please, write nickname of the second player:");
-//                blackPlayer.setName(ui.showNicknameTyperView());
+                blackPlayer.setName(ui.showNicknameTypeView());
                 break;
             case BOT_WITH_BOT:
                 whitePlayer.setName("BOT WHITE");
