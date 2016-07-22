@@ -280,18 +280,8 @@ public class Table {
                 String cur = ".";
                 if (f == null) {
                     cur = ".";
-                } else if (f.getType() == FigureType.ROOK){
-                    cur = "R";
-                } else if (f.getType() == FigureType.BISHOP){
-                    cur = "B";
-                } else if (f.getType() == FigureType.KING){
-                    cur = "K";
-                } else if (f.getType() == FigureType.KNIGHT){
-                    cur = "N";
-                } else if (f.getType() == FigureType.PAWN){
-                    cur = "P";
-                } else if (f.getType() == FigureType.QUEEN){
-                    cur = "Q";
+                } else {
+                    cur = f.getType().getSymbol();
                 }
                 if (f != null && f.getColor() == Color.BLACK) {
                     cur = cur.toLowerCase();
