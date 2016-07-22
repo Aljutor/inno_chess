@@ -52,4 +52,9 @@ public interface UserInterface {
      */
     Move showMoveTypeView();
 
+    /**
+     * Process some action to continue game or go back to the menu
+     */
+    void actionToContinue();
+
 }

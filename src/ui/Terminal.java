@@ -1,10 +1,9 @@
 package ui;
 
-import models.Coordinate;
-import models.Move;
-import models.Table;
+import models.*;
 import models.figures.Figure;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -30,7 +29,17 @@ public class Terminal implements UserInterface {
                     System.out.print(isWhiteCell ? "   " : "[ ]");
                     continue;
                 }
-                System.out.print((isWhiteCell ? " " : "[") + figures[i][j].getType().toString().charAt(0) + (isWhiteCell ? " " : "]"));
+
+                String symbol = figures[i][j].getType().getSymbol();
+                if (figures[i][j].getColor() == Color.BLACK)
+                    symbol = makeBold(symbol);
+
+                if (isWhiteCell){
+                    System.out.print(" " + symbol + " ");
+                } else {
+                    System.out.print("[" + symbol + "]");
+                }
+
             }
             System.out.println("   " + (figures.length - i));
         }
@@ -83,7 +92,16 @@ public class Terminal implements UserInterface {
 
     @Override
     public void showMatchHistory() {
+        LinkedList<GameResult> gameResults = GameResult.loadResults();
 
+        System.out.println("Match History:\n");
+
+        for (GameResult gameResult: gameResults){
+            System.out.println("White: " + gameResult.getWhitePlayerName());
+            System.out.println("Black: " + gameResult.getBlackPlayerName());
+            System.out.println("Winner: " + gameResult.getWinnerPlayerColor());
+            System.out.println();
+        }
     }
 
     @Override
@@ -104,8 +122,8 @@ public class Terminal implements UserInterface {
         String fromCoordinates = "";
         String toCoordinates = "";
 
-        try (Scanner scanner = new Scanner(System.in)){
-            while (true){
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
                 try {
                     System.out.println("Write where do you want to move FROM: (Example: f5)");
                     fromCoordinates = scanner.nextLine();
@@ -114,13 +132,26 @@ public class Terminal implements UserInterface {
 
                     move = new Move(new Coordinate(fromCoordinates), new Coordinate(toCoordinates));
                     break;
-                }catch (IllegalArgumentException iae){
-                    System.out.println("You can't chooice the cell that is not in the board!");
+                } catch (IllegalArgumentException iae) {
+                    System.out.println("You can't choice the cell that is not in the board!");
                 }
             }
         }
 
         return move;
+    }
+
+    @Override
+    public void actionToContinue() {
+        System.out.println("Press enter to continue...");
+
+        try (Scanner scanner = new Scanner(System.in)){
+            scanner.nextLine();
+        }
+    }
+
+    public static String makeBold(String str){
+        return "\u001B[1m"+ str + (char)27 + "[00;00m";
     }
 
 

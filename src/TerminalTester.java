@@ -1,3 +1,5 @@
+import models.Color;
+import models.GameResult;
 import models.Table;
 import ui.Terminal;
 import ui.UserInterface;
@@ -12,8 +14,10 @@ public class TerminalTester {
 
 //        terminal.showMenu();
 //        terminal.showMessage("Message from Controller");
-//        terminal.showTable(new Table());
-        terminal.showMoveTypeView();
+        terminal.showTable(new Table());
+//        terminal.showMoveTypeView();
+//        new GameResult("Ilnar", "Kamil", Color.WHITE).save();
+//        terminal.showMatchHistory();
     }
 
 }
