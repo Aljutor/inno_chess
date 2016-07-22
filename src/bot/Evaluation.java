@@ -14,10 +14,10 @@ public class Evaluation {
 
     //Pice values
     private int KING_VALUE   = 20000;
-    private int QUEEN_VALUE  = 1710;
-    private int ROOK_VALUE   = 824;
-    private int BISHOP_VALUE = 572;
-    private int KNIGHT_VALUE = 521;
+    private int QUEEN_VALUE  = 900;
+    private int ROOK_VALUE   = 500;
+    private int BISHOP_VALUE = 300;
+    private int KNIGHT_VALUE = 300;
     private int PAWN_VALUE   = 100;
 
     //Values for mobility
@@ -112,7 +112,7 @@ public class Evaluation {
         int r = figure.getCoor().getR();
         int c = figure.getCoor().getC();
 
-        int movies = figure.getPossibleMoves().size();
+        int movies = figure.getLegalMoves().size();
 
         //Reverse coordinates for black
         if (color == Color.BLACK){
