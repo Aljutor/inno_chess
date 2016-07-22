@@ -133,6 +133,6 @@ public class Bot extends Player {
 
     @Override
     public void messageReceiver(String s) {
-
+        System.err.printf("Message: %s\n", s);
     }
 }

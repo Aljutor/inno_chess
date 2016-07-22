@@ -31,8 +31,8 @@ public class Table {
         for (int i = DEFAULT_SIZE - 1; i >= 0; i--) {
             table[i] = new Figure[DEFAULT_SIZE];
             for (int j = 0; j < DEFAULT_SIZE; j++) {
-                Color c = Character.isUpperCase(board[i].charAt(j)) ? Color.WHITE : Color.BLACK;
-                switch (Character.toUpperCase(board[i].charAt(j))) {
+                Color c = Character.isUpperCase(board[DEFAULT_SIZE - i - 1].charAt(j)) ? Color.WHITE : Color.BLACK;
+                switch (Character.toUpperCase(board[DEFAULT_SIZE - i - 1].charAt(j))) {
                     case 'R':
                         table[i][j] = new Rook(this, c);
                         break;
