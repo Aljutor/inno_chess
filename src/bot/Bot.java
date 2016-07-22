@@ -13,7 +13,7 @@ import java.util.Random;
 public class Bot extends Player {
     int moveCounter = 0;
 
-    int DEPTH =   2;
+    int DEPTH =   5;
     int ALPHA =   -90000000;
     int BETA  =   90000000;
 
@@ -52,8 +52,8 @@ public class Bot extends Player {
                 Table mTable = table.clone();
                 mTable.doMove(m, color);
 
-                int tmp = tableRank(mTable, DEPTH - 1, this.opColor);
-                // int tmp = AlphaBeta(mTable, DEPTH -1, ALPHA, BETA, this.opColor)
+                //int tmp = tableRank(mTable, DEPTH - 1, this.opColor);
+                int tmp = AlphaBeta(mTable, DEPTH -1, ALPHA, BETA, this.opColor);
 
                 if (tmp > maxRank){
                     maxRank  = tmp;
@@ -78,6 +78,7 @@ public class Bot extends Player {
         int rank = 0;
         for (Figure f: table.getFiguresByColor(color)) {
             for (Move m : f.getLegalMoves()) {
+
                 Table mTable = table.clone();
                 mTable.doMove(m, color);
 
@@ -94,61 +95,37 @@ public class Bot extends Player {
 
     private int AlphaBeta(Table table, int depth, int alpha, int beta, Color color){
         if (depth == 0 ) {
-            return evaluation.estimate(table, color);
+            return evaluation.estimate(table, this.color);
         }
 
-        if (color == this.color){
-            int score = -900000000;
+        int score = -90000000;
+        for (Figure f: table.getFiguresByColor(color)) {
+            for (Move m : f.getLegalMoves()) {
 
-            int tmp = 0;
-            for (Figure f: table.getFiguresByColor(color)) {
-                for (Move m : f.getLegalMoves()) {
+                Table mTable = table.clone();
+                mTable.doMove(m, color);
+                int tmp;
 
-                    Table mTable = table.clone();
-                    mTable.doMove(m, color);
-                     tmp += AlphaBeta(mTable, depth - 1, alpha, beta, this.opColor);
-
-                    if (score < tmp) {
-                        score = tmp;
-                    }
-
-                    if (alpha < score) {
-                        alpha = score;
-                    }
-
-                    if (alpha >= beta) {
-                        return alpha;
-                    }
+                if (color == Color.WHITE){
+                    tmp =+ AlphaBeta(mTable, depth -1, -beta, -alpha, Color.BLACK);
+                }else {
+                    tmp =+ AlphaBeta(mTable, depth -1, -beta, -alpha, Color.WHITE);
                 }
-            }
-        }else {
-            int score = 900000000;
-            for (Figure f: table.getFiguresByColor(color)) {
-                for (Move m : f.getLegalMoves()) {
 
-                    Table mTable = table.clone();
-                    mTable.doMove(m, color);
-                    int tmp = AlphaBeta(mTable, depth - 1, alpha, beta, this.color);
+                if (tmp > score){
+                    score = tmp;
+                }
 
-                    if (score > tmp) {
-                        score = tmp;
-                    }
+                if (score > alpha){
+                    alpha = score;
+                }
 
-                    if (beta > score) {
-                        beta = score;
-                    }
-
-                    if (alpha >= beta) {
-                        return alpha;
-                    }
+                if (alpha >= beta){
+                    return alpha;
                 }
             }
         }
-
-
-
-
-        return alpha;
+        return score;
     }
 
     @Override
