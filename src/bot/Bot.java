@@ -13,7 +13,7 @@ import java.util.Random;
 public class Bot extends Player {
     int moveCounter = 0;
 
-    int DEPTH =   5;
+    int DEPTH =   3;
     int ALPHA =   -90000000;
     int BETA  =   90000000;
 
