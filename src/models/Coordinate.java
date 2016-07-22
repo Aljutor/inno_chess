@@ -13,6 +13,14 @@ public class Coordinate {
         this.c = c;
     }
 
+    public Coordinate(String s) {
+        if (s.charAt(1) < '1' || s.charAt(1) > '8' || s.charAt(0) < 'a' || s.charAt(0) > 'h'){
+            throw new IllegalArgumentException();
+        }
+        this.r = s.charAt(1) - '1';
+        this.c = s.charAt(0) - 'a';
+    }
+
     public int getR() {
         return r;
     }

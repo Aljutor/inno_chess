@@ -17,7 +17,7 @@ public class Rook extends Figure {
         super(table, color, FigureType.ROOK);
     }
 
-    public List<Move> getMoves() {
+    public List<Move> getPseudoLegalMoves() {
         return applyArray(dr, dc);
     }
 }
