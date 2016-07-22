@@ -13,13 +13,11 @@ import java.util.Random;
 public class Bot extends Player {
     int moveCounter = 0;
 
-    int DEPTH =   3;
+    int DEPTH =   2;
     int ALPHA =   -90000000;
     int BETA  =   90000000;
 
     Color opColor;
-
-
 
     Evaluation evaluation = new Evaluation();
     Random random = new Random();
@@ -48,16 +46,14 @@ public class Bot extends Player {
         }
 
         int maxRank  = -900000000;
-
         List<Figure> figureList = table.getFiguresByColor(color);
-
         for (Figure f: figureList){
             for (Move m: f.getLegalMoves()){
-
                 Table mTable = table.clone();
                 mTable.doMove(m, color);
 
-                int tmp = AlphaBeta(mTable, DEPTH - 1, ALPHA, BETA, this.color);
+                int tmp = tableRank(mTable, DEPTH - 1, this.opColor);
+                // int tmp = AlphaBeta(mTable, DEPTH -1, ALPHA, BETA, this.opColor)
 
                 if (tmp > maxRank){
                     maxRank  = tmp;
@@ -74,19 +70,43 @@ public class Bot extends Player {
         return nextMove;
     }
 
+    private int tableRank(Table table, int depth, Color color){
+        if (depth == 0 ) {
+            return evaluation.estimate(table, this.color);
+        }
+
+        int rank = 0;
+        for (Figure f: table.getFiguresByColor(color)) {
+            for (Move m : f.getLegalMoves()) {
+                Table mTable = table.clone();
+                mTable.doMove(m, color);
+
+                if (color == Color.WHITE){
+                    rank += tableRank(mTable, depth -1 , Color.BLACK);
+                }else {
+                    rank += tableRank(mTable, depth -1 , Color.WHITE);
+                }
+            }
+        }
+
+        return  rank;
+    }
+
     private int AlphaBeta(Table table, int depth, int alpha, int beta, Color color){
-        if (depth <= 0 ) {
+        if (depth == 0 ) {
             return evaluation.estimate(table, color);
         }
 
         if (color == this.color){
             int score = -900000000;
+
+            int tmp = 0;
             for (Figure f: table.getFiguresByColor(color)) {
                 for (Move m : f.getLegalMoves()) {
 
                     Table mTable = table.clone();
                     mTable.doMove(m, color);
-                    int tmp = AlphaBeta(mTable, depth - 1, alpha, beta, this.opColor);
+                     tmp += AlphaBeta(mTable, depth - 1, alpha, beta, this.opColor);
 
                     if (score < tmp) {
                         score = tmp;
