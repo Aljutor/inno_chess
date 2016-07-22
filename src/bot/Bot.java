@@ -3,6 +3,7 @@ package bot;
 import models.*;
 import models.figures.Figure;
 
+import javax.swing.text.TabExpander;
 import java.util.List;
 import java.util.Random;
 
@@ -11,70 +12,117 @@ import java.util.Random;
  */
 public class Bot extends Player {
     int moveCounter = 0;
+
+    int DEPTH =   4;
+    int ALPHA =   -90000000;
+    int BETA  =   90000000;
+
+    Color opColor;
+
+
+
+    Evaluation evaluation = new Evaluation();
+    Random random = new Random();
+
     public Bot(String name, Color color) {
-
         super(name, color);
-    }
 
-    static Random random;
+        if (color == Color.WHITE){
+            opColor = Color.BLACK;
+        }else {
+            opColor = Color.WHITE;
+        }
+    }
 
     public Move nextMove(Table table){
         this.moveCounter++;
-        List<Figure> figureList = table.getFiguresByColor(color);
         Move nextMove = null;
 
-
-
-
-
-
-        
-        if (random == null) {
-            long time = System.currentTimeMillis();
-            //time = 1469126667948L;
-            System.out.printf("{Seed: %d}\n", time);
-            random = new Random(time);
-        }
-
-        while (true){
-            Figure f =  figureList.get(random.nextInt(figureList.size()));
-            List<Move> moves = f.getPossibleMoves();
-            if (moves.size() > 0) {
-
-                Move move = moves.get(random.nextInt(moves.size()));
-                if (move.to.getR() == move.from.getR() && move.to.getC() == move.from.getC()){
-                    System.out.println("WTF");
-                }
-                return move;
-
+        if (this.moveCounter < 2){
+            int col = random.nextInt(8);
+            if(this.color == Color.WHITE){
+                return new Move(new Coordinate(1, col), new Coordinate(2,col));
+            }else {
+                return new Move(new Coordinate(6, col), new Coordinate(5,col));
             }
         }
 
-        /*
+        int maxRank  = -900000000;
 
+        List<Figure> figureList = table.getFiguresByColor(color);
 
-
-        Evaluation evaluation = new Evaluation();
-        int maxRank  = -90000; //Not best, but prevent no any move situation
         for (Figure f: figureList){
-            Coordinate position = f.getCoor();
-            List<Move> moves = f.getPossibleMoves();
+            for (Move m: f.getPossibleMoves()){
 
-            for (Move move: moves){
-                Table newTable = table.clone();
+                Table mTable = table.clone();
+                mTable.doMove(m, color);
 
-                newTable.doMove(move, this.getColor());
+                int tmp = AlphaBeta(mTable, DEPTH - 1, ALPHA, BETA, this.color);
 
-                if (evaluation.estimate(newTable, this.color) > maxRank){
-                    nextMove = move;
+                if (tmp > maxRank){
+                    maxRank  = tmp;
+                    nextMove = m;
+                }
+            }
+        }
+        return nextMove;
+    }
+
+    private int AlphaBeta(Table table, int depth, int alpha, int beta, Color color){
+        if (depth <= 0 ) {
+            return evaluation.estimate(table, color);
+        }
+
+        if (color == this.color){
+            int score = -900000000;
+            for (Figure f: table.getFiguresByColor(color)) {
+                for (Move m : f.getPossibleMoves()) {
+
+                    Table mTable = table.clone();
+                    mTable.doMove(m, color);
+                    int tmp = AlphaBeta(mTable, depth - 1, alpha, beta, this.opColor);
+
+                    if (score < tmp) {
+                        score = tmp;
+                    }
+
+                    if (alpha < score) {
+                        alpha = score;
+                    }
+
+                    if (alpha >= beta) {
+                        return alpha;
+                    }
+                }
+            }
+        }else {
+            int score = 900000000;
+            for (Figure f: table.getFiguresByColor(color)) {
+                for (Move m : f.getPossibleMoves()) {
+
+                    Table mTable = table.clone();
+                    mTable.doMove(m, color);
+                    int tmp = AlphaBeta(mTable, depth - 1, alpha, beta, this.color);
+
+                    if (score > tmp) {
+                        score = tmp;
+                    }
+
+                    if (beta > score) {
+                        beta = score;
+                    }
+
+                    if (alpha >= beta) {
+                        return alpha;
+                    }
                 }
             }
         }
 
 
-        return nextMove;
-        */
 
+
+        return alpha;
     }
 
     @Override
