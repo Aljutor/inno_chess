@@ -158,12 +158,11 @@ public class Evaluation {
             blackRank += valRank(f) + posRank(f, Color.BLACK);
         }
 
-        rank = whiteRank - blackRank;
 
         if (color == Color.WHITE){
-            return rank;
+            return  whiteRank - blackRank;
         }else{
-            return -rank;
+            return  blackRank - whiteRank;
         }
     }
 }

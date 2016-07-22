@@ -11,10 +11,23 @@ import java.util.Scanner;
  */
 public class Terminal implements UserInterface {
 
+<<<<<<< HEAD
     public static Scanner scanner = new Scanner(System.in);
+=======
+    long lastShowTime;
+>>>>>>> b565d370bb8c02a55e811c73306adce9a67f63b9
 
     @Override
     public void showTable(Table t) {
+        long curTime = System.currentTimeMillis();
+        while (curTime - lastShowTime < 1500) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+            curTime = System.currentTimeMillis();
+        }
+        lastShowTime = curTime;
         Figure[][] figures = t.getTable();
         System.out.println();
         System.out.println();

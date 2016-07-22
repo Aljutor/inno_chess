@@ -22,8 +22,8 @@ public class Knight extends Figure {
     public List<Move> getPseudoLegalMoves() {
         List<Move> result = new ArrayList<>();
         for (int i = 0; i < dr.length; i++) {
-            int newR = r() + dr[i];
-            int newC = c() + dc[i];
+            int newR = getR() + dr[i];
+            int newC = getC() + dc[i];
             if (table.checkMoveDumb(newR, newC, color)) {
                 Move move = new Move(coor, new Coordinate(newR, newC));
                 result.add(move);

@@ -35,28 +35,28 @@ public class Pawn extends Figure {
             koff = -1;
         }
         if (color == Color.BLACK) {
-            Move move = new Move(coor, new Coordinate(4, c()));
-            if (r() == 6 && table.checkMoveDumb(4, c(), color) && table.getFigure(5, c()) == null && table.getFigure(4, c()) == null) {
+            Move move = new Move(coor, new Coordinate(4, getC()));
+            if (getR() == 6 && table.checkMoveDumb(4, getC(), color) && table.getFigure(5, getC()) == null && table.getFigure(4, getC()) == null) {
                 result.add(move);
             }
         } else {
-            Move move = new Move(coor, new Coordinate(3, c()));
-            if (r() == 1 && table.checkMoveDumb(3, c(), color) && table.getFigure(2, c()) == null && table.getFigure(3, c()) == null) {
+            Move move = new Move(coor, new Coordinate(3, getC()));
+            if (getR() == 1 && table.checkMoveDumb(3, getC(), color) && table.getFigure(2, getC()) == null && table.getFigure(3, getC()) == null) {
                 result.add(move);
             }
         }
-        if (table.checkMoveDumb(r() + koff, c() - 1, color) && table.getFigure(r() + koff, c() - 1) != null) {
-            Move move = new Move(coor, new Coordinate(r() + koff, c() - 1));
+        if (table.checkMoveDumb(getR() + koff, getC() - 1, color) && table.getFigure(getR() + koff, getC() - 1) != null) {
+            Move move = new Move(coor, new Coordinate(getR() + koff, getC() - 1));
             addTransformation(result, move.to);
             result.add(move);
         }
-        if (table.checkMoveDumb(r() + koff, c(), color) && table.getFigure(r() + koff, c()) == null) {
-            Move move = new Move(coor, new Coordinate(r() + koff, c()));
+        if (table.checkMoveDumb(getR() + koff, getC(), color) && table.getFigure(getR() + koff, getC()) == null) {
+            Move move = new Move(coor, new Coordinate(getR() + koff, getC()));
             addTransformation(result, move.to);
             result.add(move);
         }
-        if (table.checkMoveDumb(r() + koff, c() + 1, color) && table.getFigure(r() + koff, c() + 1) != null) {
-            Move move = new Move(coor, new Coordinate(r() + koff, c() + 1));
+        if (table.checkMoveDumb(getR() + koff, getC() + 1, color) && table.getFigure(getR() + koff, getC() + 1) != null) {
+            Move move = new Move(coor, new Coordinate(getR() + koff, getC() + 1));
             addTransformation(result, move.to);
             result.add(move);
         }
